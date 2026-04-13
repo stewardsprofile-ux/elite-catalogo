@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Testimonios | Elite Parfums CR</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+    <img class="logo" src="assets/logo.png" alt="Logo">
+    <h1 class="titulo">ELITE PARFUMS CR</h1>
+    <a href="index.html" class="btn-testimonios">← Volver al Catálogo</a>
+</header>
+
+<section class="slider-testimonios">
+    <div class="slider-track" id="sliderTrack">
+        <img src="assets/testimonios/t (1).jpg">
+        <img src="assets/testimonios/t (2).jpg">
+        <img src="assets/testimonios/t (3).jpg">
+        <img src="assets/testimonios/t (4).jpg">
+        <img src="assets/testimonios/t (5).jpg">
+        <img src="assets/testimonios/t (6).jpg">
+        <img src="assets/testimonios/t (7).jpg">
+        <img src="assets/testimonios/t (8).jpg">
+        <img src="assets/testimonios/t (9).jpg">
+        <img src="assets/testimonios/t (10).jpg">
+        <img src="assets/testimonios/t (11).jpg">
+        <img src="assets/testimonios/t (12).jpg">
+        <img src="assets/testimonios/t (13).jpg">
+        <img src="assets/testimonios/t (14).jpg">
+        <img src="assets/testimonios/t (15).jpg">
+        <img src="assets/testimonios/t (16).jpg">
+        <img src="assets/testimonios/t (17).jpg">
+        <img src="assets/testimonios/t (18).jpg">
+        <img src="assets/testimonios/t (19).jpg">
+        <img src="assets/testimonios/t (20).jpg">
+        <img src="assets/testimonios/t (21).jpg">
+        <img src="assets/testimonios/t (22).jpg">
+        <img src="assets/testimonios/t (23).jpg">
+        <img src="assets/testimonios/t (24).jpg">
+        <img src="assets/testimonios/t (25).jpg">
+        <img src="assets/testimonios/t (26).jpg">
+        <img src="assets/testimonios/t (27).jpg">
+        <img src="assets/testimonios/t (28).jpg">
+        <img src="assets/testimonios/t (29).jpg">
+        <img src="assets/testimonios/t (30).jpg">
+        <img src="assets/testimonios/t (31).jpg">
+        <img src="assets/testimonios/t (32).jpg">
+        <img src="assets/testimonios/t (33).jpg">
+        <img src="assets/testimonios/t (34).jpg">
+        <img src="assets/testimonios/t (35).jpg">
+        <img src="assets/testimonios/t (36).jpg">
+        <img src="assets/testimonios/t (37).jpg">
+    </div>
+</section>
+
+<script>
+    const track = document.getElementById("sliderTrack");
+    const step = 300; // Ancho imagen + gap aproximado
+
+    function autoScroll() {
+        if (track.scrollLeft >= (track.scrollWidth - track.clientWidth - 5)) {
+            track.scrollTo({ left: 0, behavior: "smooth" });
+        } else {
+            track.scrollBy({ left: step, behavior: "smooth" });
+        }
+    }
+
+    let timer = setInterval(autoScroll, 3000);
+
+    // Pausar si el usuario interactúa
+    track.addEventListener("mousedown", () => clearInterval(timer));
+    track.addEventListener("touchstart", () => clearInterval(timer));
+</script>
+
+</body>
+</html>

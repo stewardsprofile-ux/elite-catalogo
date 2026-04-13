@@ -1,0 +1,43 @@
+backend:
+  name: github
+  repo: stewardsprofile-ux/elite-catalogo
+  branch: main
+  base_url: https://decap-cms-vercel-stewardsprofile-uxs-projects.vercel.app
+  auth_endpoint: api/auth
+
+# Carpetas separadas para que no se te haga un colocho con las fotos
+media_folder: "assets/images"
+public_folder: "/assets/images"
+
+collections:
+  # COLECCIÓN DE PERFUMES
+  - name: "perfumes"
+    label: "Catálogo de Perfumes"
+    folder: "assets/data/perfumes"
+    create: true
+    slug: "{{brand}}-{{title}}"
+    format: "json"
+    fields:
+      - { label: "ID Único", name: "id", widget: "string" }
+      - { label: "Marca", name: "marca", widget: "string" }
+      - { label: "Nombre del Perfume", name: "nombre", widget: "string" }
+      - { label: "Género", name: "genero", widget: "select", options: ["Hombre", "Mujer", "Unisex"] }
+      - { label: "Tipo", name: "tipo", widget: "select", options: ["Diseñador", "Árabe", "Nicho", "Estuche"] }
+      - { label: "Imagen", name: "imagen", widget: "image" }
+      - { label: "Descripción / Notas Olfativas", name: "descripcion", widget: "text" }
+
+  # COLECCIÓN DE ORO
+  - name: "oro"
+    label: "Catálogo de Oro 10K"
+    folder: "assets/data/oro"
+    create: true
+    slug: "{{tipo}}-{{categoria}}-{{id}}"
+    format: "json"
+    fields:
+      - { label: "ID Pieza", name: "id", widget: "string" }
+      - { label: "Tipo de Oro", name: "tipo", widget: "select", options: ["Oro Nacional", "Oro Italiano"] }
+      - { label: "Categoría", name: "categoria", widget: "select", options: ["Cadenas", "Pulseras", "Anillos", "Argollas", "Aretes"] }
+      - { label: "Nombre de la Pieza", name: "nombre", widget: "string" }
+      - { label: "Imagen", name: "imagen", widget: "image" }
+      - { label: "Descripción", name: "descripcion", widget: "text" }
+      - { label: "Es Novedad (Lo más reciente)", name: "reciente", widget: "boolean", default: true }
