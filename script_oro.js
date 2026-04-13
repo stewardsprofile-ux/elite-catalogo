@@ -2,7 +2,7 @@
 const telefonoGold = "50662104761";
 let joyas = [];
 let visiblesOro = 24;
-// Variable para guardar el filtro actual (puede ser Tipo o Categoría)
+// Variable para guardar el filtro actual (funciona para Tipo y Categoría)
 let filtroActualOro = "Todos";
 
 const catalogoOro = document.getElementById("catalogoOro");
@@ -31,7 +31,6 @@ async function cargarOro() {
         console.error("Error en la carga:", err);
     } finally {
         if(loaderOro) loaderOro.style.display = "none";
-        // Al cargar por primera vez
         actualizarEstadoBotonesOro('Todos');
         renderOro();
     }
@@ -44,7 +43,7 @@ function renderOro() {
     if(!catalogoOro) return;
     catalogoOro.innerHTML = "";
 
-    // Filtrar: Busca coincidencia tanto en 'tipo' como en 'categoria'
+    // FILTRO TOTAL: Busca coincidencia en tipo (Nacional/Italiano) o categoria (Cadenas/Anillos/etc)
     const filtrados = joyas.filter(j => 
         filtroActualOro === "Todos" || 
         j.tipo === filtroActualOro || 
@@ -66,12 +65,11 @@ function renderOro() {
         const card = document.createElement("div");
         card.className = "card-oro";
         card.innerHTML = `
-            <div class="tag-oro">${j.tipo || 'Oro 10K'}</div>
+            <div class="tag-oro">${j.tipo || j.categoria || 'Oro 10K'}</div>
             <img src="${urlFinal}" alt="${nombreDisplay}" loading="lazy" onclick="verImagen('${imgPath}')" onerror="this.src='assets/placeholder.webp'">
             <h3>${nombreDisplay}</h3>
-            <p>${j.categoria || 'Colección Exclusiva'}</p>
             <button class="btn-cotizar-oro" onclick="cotizarJoya('${nombreDisplay}','${imgPath}')">
-                Consultar Precio
+                Cotizar
             </button>
         `;
         catalogoOro.appendChild(card);
@@ -79,22 +77,17 @@ function renderOro() {
 }
 
 /* LÓGICA DE FILTROS */
-// Esta función ahora sirve para AMBOS: Tipo (Nacional/Italiano) y Categoría (Cadenas/Anillos)
 function filtrarOro(valor) {
     filtroActualOro = valor; 
     actualizarEstadoBotonesOro(valor); 
     renderOro(); 
 }
 
-// Función corregida para iluminar el botón correcto en ambos grupos
 function actualizarEstadoBotonesOro(seleccionado) {
-    // Seleccionamos TODOS los botones de filtro posibles
     const botones = document.querySelectorAll('.tipo-oro, .cat-oro');
     
     botones.forEach(boton => {
-        // Limpiamos espacios para evitar errores de comparación
         const textoBoton = boton.textContent.trim();
-        
         if (textoBoton === seleccionado) {
             boton.classList.add('active');
         } else {
