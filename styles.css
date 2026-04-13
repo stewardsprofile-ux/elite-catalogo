@@ -12,6 +12,7 @@ header {
     text-align: center;
     padding: 35px 10px;
     background: #10171f;
+    position: relative;
 }
 
 .logo {
@@ -30,7 +31,7 @@ header {
     font-weight: 800;
 }
 
-/* 1. CONTENEDOR BUSCADOR Y BOTÓN IA (ALINEADOS) */
+/* 1. CONTENEDOR BUSCADOR Y BOTÓN IA */
 .search-container {
     margin-bottom: 30px;
     display: flex;
@@ -111,12 +112,13 @@ header {
 }
 
 .filtros-principales button.active {
-    background: #ffffff; 
-    color: #10171f;
-    border-color: #ffffff;
+    background: #D4AF37 !important; /* Dorado al estar activo */
+    color: #10171f !important;
+    border-color: #ffd700 !important;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
 }
 
-/* BOTÓN ORO 10k PREMIUM (Sincronizado con .btn-seccion) */
+/* BOTONES ORO 10k PREMIUM */
 .btn-oro, .btn-seccion {
     padding: 10px 22px;
     border: 2px solid #D4AF37 !important;
@@ -143,7 +145,7 @@ header {
     transform: translateY(-2px);
 }
 
-/* 3. SECCIÓN DE MARCAS */
+/* 3. SECCIÓN DE MARCAS / CARRUSEL */
 .contenedor-marcas-scroll {
     position: relative;
     max-width: 1000px;
@@ -193,11 +195,6 @@ header {
     opacity: 0.6; 
 }
 
-.flecha-scroll:hover { 
-    opacity: 1; 
-    transform: scale(1.2); 
-}
-
 /* 4. SECCIÓN TESTIMONIOS */
 .btn-testimonios {
     display: inline-block;
@@ -212,28 +209,71 @@ header {
     transition: 0.3s;
 }
 
-/* CATALOGO */
-#catalogo {
+/* CATALOGOS GENERALES */
+#catalogo, #catalogoOro {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 30px;
     padding: 40px;
-    max-width: 1600px;
+    max-width: 1400px;
     margin: auto;
+    justify-items: center;
 }
 
-.card {
+/* TARJETA UNIFICADA (Perfumes y Oro) */
+.card, .card-oro {
     background: #ffffff; 
     border-radius: 20px;
     padding: 20px;
     text-align: center;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease;
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.card img { width: 100%; height: 300px; object-fit: contain; }
-.card h3 { font-size: 15px; color: #10171f; margin: 15px 0; font-weight: 700; height: 40px; }
+.card:hover, .card-oro:hover {
+    transform: translateY(-5px);
+}
 
-.btn {
+/* AJUSTE IMÁGENES ORO PEQUEÑAS */
+.card-oro img {
+    width: 200px; 
+    height: 200px; 
+    object-fit: contain;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+/* IMÁGENES PERFUMES */
+.card img { 
+    width: 100%; 
+    height: 300px; 
+    object-fit: contain; 
+}
+
+.card h3, .card-oro h3 { 
+    font-size: 15px; 
+    color: #10171f; 
+    margin: 15px 0; 
+    font-weight: 700; 
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-oro p {
+    font-size: 14px;
+    color: #a0aab4;
+    margin-bottom: 15px;
+}
+
+/* BOTÓN COTIZAR (Diseño Negro Redondeado) */
+.btn, .btn-cotizar-oro {
     background: #10171f;
     color: #ffffff;
     border: none;
@@ -242,15 +282,28 @@ header {
     cursor: pointer;
     font-weight: bold;
     width: 100%;
+    transition: 0.3s;
+    font-size: 14px;
+}
+
+.btn:hover, .btn-cotizar-oro:hover {
+    background: #1a2531;
+}
+
+/* TAG ORO */
+.tag-oro {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #D4AF37;
+    background: rgba(212, 175, 55, 0.1);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
 }
 
 /* BOTONES FLOTANTES */
-.whatsapp-float {
-    position: fixed;
-    bottom: 25px;
-    left: 25px;
-    z-index: 1000;
-}
+.whatsapp-float { position: fixed; bottom: 25px; left: 25px; z-index: 1000; }
 .whatsapp-float img { width: 45px; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.4)); }
 
 #btnArriba {
@@ -266,7 +319,6 @@ header {
     display: none;
     z-index: 1000;
     cursor: pointer;
-    font-weight: bold;
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
@@ -297,49 +349,36 @@ header {
     margin: auto; 
 }
 
-.btn-pregunta {
-    display: block;
-    width: 100%;
-    background: rgba(255, 255, 255, 0.05);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 12px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.2s;
-    font-weight: 600;
-    text-align: left;
+/* VISOR DE IMÁGENES */
+#visorImagen {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
 }
 
-.btn-pregunta:hover {
-    background: #ffffff;
-    color: #10171f;
-    border-color: #ffffff;
+#imagenGrande {
+    max-width: 90%;
+    max-height: 90%;
+    border: 2px solid #D4AF37;
+    border-radius: 10px;
 }
 
-/* RESPONSIVE MÓVIL (600px o menos) */
+/* RESPONSIVE MÓVIL */
 @media (max-width: 600px) {
-    #catalogo { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 15px; }
+    #catalogo, #catalogoOro { 
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 15px; 
+        padding: 15px; 
+    }
     .card img { height: 180px; }
+    .card-oro img { width: 140px; height: 140px; }
     .titulo { font-size: 24px; }
     
-    /* Buscador y IA se apilan en móvil */
     .search-box-wrapper { flex-direction: column; width: 100%; }
     #search { max-width: 100%; width: 100%; }
-    .btn-ia-search { width: 100%; flex: none; }
-    
-    /* BOTÓN ORO 10k: Abarca el ancho de los filtros */
-    .btn-oro, .btn-seccion {
-        width: 100%;
-        max-width: 320px; /* Ajustado para alinear visualmente con los botones superiores */
-        margin: 5px auto;
-        display: flex;
-        padding: 12px 0;
-        font-size: 15px;
-    }
-
-    #lista-matches { grid-template-columns: 1fr !important; gap: 20px; } 
-    .bot-content { padding: 20px 15px; width: 95%; }
+    .btn-ia-search { width: 100%; }
 }
