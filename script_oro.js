@@ -1,14 +1,12 @@
 /* CONFIGURACIÓN ORO 10K - ELITE GOLD */
 const telefonoGold = "50662104761";
 let joyas = [];
-let visiblesOro = 24;
-// Variable para guardar el filtro actual (funciona para Tipo y Categoría)
 let filtroActualOro = "Todos";
 
-const catalogoOro = document.getElementById("catalogoOro");
+// Asegúrate de que estos IDs coincidan con el HTML
+const catalogoOro = document.getElementById("catalogo-oro"); 
 const loaderOro = document.getElementById("loaderOro");
 
-/* CARGAR CATÁLOGO DE ORO */
 async function cargarOro() {
     try {
         const user = "stewardsprofile-ux";
@@ -31,19 +29,14 @@ async function cargarOro() {
         console.error("Error en la carga:", err);
     } finally {
         if(loaderOro) loaderOro.style.display = "none";
-        actualizarEstadoBotonesOro('Todos');
         renderOro();
     }
 }
 
-cargarOro();
-
-/* RENDERIZAR JOYAS */
 function renderOro() {
     if(!catalogoOro) return;
     catalogoOro.innerHTML = "";
 
-    // FILTRO TOTAL: Busca coincidencia en tipo (Nacional/Italiano) o categoria (Cadenas/Anillos/etc)
     const filtrados = joyas.filter(j => 
         filtroActualOro === "Todos" || 
         j.tipo === filtroActualOro || 
@@ -51,24 +44,25 @@ function renderOro() {
     );
 
     if(filtrados.length === 0) {
-        catalogoOro.innerHTML = `<p style="color:white; grid-column:1/-1; text-align:center; padding:40px; font-size:14px;">No se encontraron piezas en "${filtroActualOro}".</p>`;
+        catalogoOro.innerHTML = `<p style="color:white; grid-column:1/-1; text-align:center; padding:40px;">No se encontraron piezas en "${filtroActualOro}".</p>`;
         return;
     }
 
     filtrados.forEach(j => {
-        const nombreDisplay = j.nombre || j.titulo || "Joya Elite";
-        
-        let imgPath = j.imagen || "";
-        if(imgPath.startsWith('/')) imgPath = imgPath.substring(1);
-        const urlFinal = window.location.origin + "/" + imgPath;
+        const nombreDisplay = j.nombre || "Joya Elite";
+        // Decap guarda /assets/images/foto.jpg, lo usamos directo con el origen
+        const urlFinal = window.location.origin + j.imagen;
 
         const card = document.createElement("div");
         card.className = "card-oro";
         card.innerHTML = `
             <div class="tag-oro">${j.tipo || j.categoria || 'Oro 10K'}</div>
-            <img src="${urlFinal}" alt="${nombreDisplay}" loading="lazy" onclick="verImagen('${imgPath}')" onerror="this.src='assets/placeholder.webp'">
+            <img src="${urlFinal}" alt="${nombreDisplay}" loading="lazy" 
+                 onclick="verImagen('${urlFinal}')" 
+                 onerror="this.src='assets/placeholder.webp'">
             <h3>${nombreDisplay}</h3>
-            <button class="btn-cotizar-oro" onclick="cotizarJoya('${nombreDisplay}','${imgPath}')">
+            <p style="color: #bbb; font-size: 0.85em; margin-bottom: 10px;">${j.descripcion || ''}</p>
+            <button class="btn-cotizar-oro" onclick="cotizarJoya('${nombreDisplay}','${urlFinal}')">
                 Cotizar
             </button>
         `;
@@ -76,7 +70,6 @@ function renderOro() {
     });
 }
 
-/* LÓGICA DE FILTROS */
 function filtrarOro(valor) {
     filtroActualOro = valor; 
     actualizarEstadoBotonesOro(valor); 
@@ -85,10 +78,9 @@ function filtrarOro(valor) {
 
 function actualizarEstadoBotonesOro(seleccionado) {
     const botones = document.querySelectorAll('.tipo-oro, .cat-oro');
-    
     botones.forEach(boton => {
-        const textoBoton = boton.textContent.trim();
-        if (textoBoton === seleccionado) {
+        const valorBoton = boton.getAttribute('data-tipo') || boton.getAttribute('data-cat');
+        if (valorBoton === seleccionado) {
             boton.classList.add('active');
         } else {
             boton.classList.remove('active');
@@ -96,19 +88,23 @@ function actualizarEstadoBotonesOro(seleccionado) {
     });
 }
 
-/* WHATSAPP */
-function cotizarJoya(nombre, imagen) {
-    const urlRef = window.location.origin + "/" + imagen;
-    const mensaje = `¡Hola! ✨ Me interesa esta pieza de *Oro 10K* que vi en el catálogo:\n\n*Pieza:* ${nombre}\n\nReferencia: ${urlRef}`;
+function cotizarJoya(nombre, urlImagen) {
+    const mensaje = `¡Hola! ✨ Me interesa esta pieza de *Oro 10K*:\n\n*Pieza:* ${nombre}\n\nReferencia: ${urlImagen}`;
     window.open(`https://wa.me/${telefonoGold}?text=${encodeURIComponent(mensaje)}`, "_blank");
 }
 
-/* VISOR */
-function verImagen(img){ 
+function verImagen(url){ 
     const visor = document.getElementById("visorImagen");
     const imgGrande = document.getElementById("imagenGrande");
     if(visor && imgGrande) {
-        imgGrande.src = window.location.origin + "/" + img;
+        imgGrande.src = url;
         visor.style.display = "flex"; 
     }
 }
+
+// Cerrar visor
+document.addEventListener('keydown', (e) => {
+    if(e.key === "Escape") document.getElementById("visorImagen").style.display = "none";
+});
+
+cargarOro();
