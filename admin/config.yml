@@ -5,7 +5,6 @@ backend:
   base_url: https://decap-cms-vercel-stewardsprofile-uxs-projects.vercel.app
   auth_endpoint: api/auth
 
-# Carpetas separadas para que no se te haga un colocho con las fotos
 media_folder: "assets/images"
 public_folder: "/assets/images"
 
@@ -16,6 +15,7 @@ collections:
     folder: "assets/data/perfumes"
     create: true
     slug: "{{brand}}-{{title}}"
+    extension: "json"
     format: "json"
     fields:
       - { label: "ID Único", name: "id", widget: "string" }
@@ -31,13 +31,14 @@ collections:
     label: "Catálogo de Oro 10K"
     folder: "assets/data/oro"
     create: true
-    slug: "{{tipo}}-{{categoria}}-{{id}}"
+    slug: "{{id}}-{{nombre}}"
+    extension: "json"
     format: "json"
     fields:
       - { label: "ID Pieza", name: "id", widget: "string" }
+      - { label: "Nombre de la Pieza", name: "nombre", widget: "string" }
       - { label: "Tipo de Oro", name: "tipo", widget: "select", options: ["Oro Nacional", "Oro Italiano"] }
       - { label: "Categoría", name: "categoria", widget: "select", options: ["Cadenas", "Pulseras", "Anillos", "Argollas", "Aretes"] }
-      - { label: "Nombre de la Pieza", name: "nombre", widget: "string" }
       - { label: "Imagen", name: "imagen", widget: "image" }
-      - { label: "Descripción", name: "descripcion", widget: "text" }
+      - { label: "Descripción / Detalles", name: "descripcion", widget: "text" }
       - { label: "Es Novedad (Lo más reciente)", name: "reciente", widget: "boolean", default: true }
