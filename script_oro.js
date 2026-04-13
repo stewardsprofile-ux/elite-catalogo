@@ -6,18 +6,42 @@ let visiblesOro = 24;
 const catalogoOro = document.getElementById("catalogoOro");
 const loaderOro = document.getElementById("loaderOro");
 
-/* CARGAR CATÁLOGO DE ORO (Desde la carpeta que gestiona el Admin) */
+/* CARGAR CATÁLOGO DE ORO (Escaneando carpeta de archivos individuales) */
 async function cargarOro() {
     try {
-        // Aquí llamamos al JSON que generará Decap CMS para la joyería
-        const res = await fetch("assets/data/oro.json"); 
-        joyas = await res.json();
+        // Datos para conectar con GitHub
+        const user = "stewardsprofile-ux";
+        const repo = "elite-catalogo";
+        const folderPath = "assets/data/oro";
+        
+        // 1. Consultamos la API de GitHub para ver qué archivos hay en la carpeta /oro
+        const resGithub = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${folderPath}`);
+        
+        if (!resGithub.ok) {
+            throw new Error("Carpeta de joyería no encontrada");
+        }
+
+        const archivos = await resGithub.json();
+        
+        // 2. Filtramos solo los archivos .json y descargamos su contenido
+        const promesas = archivos
+            .filter(archivo => archivo.name.endsWith('.json'))
+            .map(archivo => fetch(archivo.download_url).then(r => r.json()));
+        
+        const piezasNuevas = await Promise.all(promesas);
+
+        // 3. Guardamos las piezas en la variable global (las más nuevas primero)
+        joyas = piezasNuevas;
 
         if(loaderOro) loaderOro.style.display = "none";
         renderOro();
     } catch (err) {
-        if(loaderOro) loaderOro.innerHTML = "Próximamente: Catálogo de Oro 10K";
-        console.error("Esperando datos de joyería...", err);
+        if(loaderOro) {
+            loaderOro.innerHTML = "Próximamente: Catálogo de Oro 10K";
+            // Si el error es porque la carpeta está vacía, mostramos un mensaje amigable
+            console.warn("Esperando datos de joyería o carpeta vacía.");
+        }
+        console.error(err);
     }
 }
 cargarOro();
@@ -40,13 +64,13 @@ function renderOro(filtroTipo = "Todos") {
 
     lista.forEach(j => {
         const card = document.createElement("div");
-        card.className = "card-oro"; // Puedes darle un estilo más premium en CSS
+        card.className = "card-oro"; 
         card.innerHTML = `
-            <img src="${j.imagen}" loading="lazy" onclick="verImagen('${j.imagen}')">
+            <img src="${j.imagen}" loading="lazy" onclick="verImagen('${j.imagen}')" onerror="this.src='assets/placeholder.webp'">
             <div class="info-oro">
                 <span class="tag-oro">${j.tipo}</span>
                 <h3>${j.nombre}</h3>
-                <p>${j.categoria}</p>
+                <p>${j.categoria || ''}</p>
                 <button class="btn-cotizar-oro" onclick="cotizarJoya('${j.nombre}','${j.imagen}')">
                     Consultar Precio
                 </button>
@@ -64,7 +88,18 @@ function cotizarJoya(nombre, imagen) {
     window.open(`https://wa.me/${telefonoGold}?text=${encodeURIComponent(mensaje)}`, "_blank");
 }
 
-/* FUNCIÓN PARA EL BOTÓN DE REDIRECCIÓN (El que ya tienes en el index) */
+/* UTILIDADES */
+function verImagen(img){ 
+    const url = window.location.origin + "/" + img; 
+    const visor = document.getElementById("visorImagen");
+    const imgGrande = document.getElementById("imagenGrande");
+    
+    if(visor && imgGrande) {
+        imgGrande.src = url; 
+        visor.style.display = "flex"; 
+    }
+}
+
 function irAOro() {
     window.location.href = "oro.html";
 }

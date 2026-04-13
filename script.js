@@ -14,16 +14,51 @@ const loader = document.getElementById("loader");
 const btnArriba = document.getElementById("btnArriba");
 const seccionReciente = document.getElementById("seccion-reciente");
 
-/* CARGAR CATÁLOGO (Integrado con Admin Panel) */
+/* CARGAR CATÁLOGO (Híbrido: Scraping Estático + Admin Panel) */
 async function cargarDatos() {
     try {
-        // Carga el JSON base actual
+        // 1. Carga el JSON base actual (tu scraping)
         const res = await fetch("perfumes.json");
-        const data = await res.json();
+        const perfumesBase = await res.json();
         
-        // Aquí podrías añadir un fetch a la carpeta de perfumes del admin si fuera necesario
-        // Por ahora mantenemos tu lógica base para no romper el scraping
-        perfumes = data;
+        // 2. Intentar cargar perfumes nuevos desde la carpeta del Admin en GitHub
+        const user = "stewardsprofile-ux";
+        const repo = "elite-catalogo";
+        const folderPath = "assets/data/perfumes";
+        let perfumesNuevos = [];
+
+        try {
+            // Consultamos la API de GitHub para listar archivos en la carpeta de perfumes
+            const resGithub = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${folderPath}`);
+            
+            if (resGithub.ok) {
+                const archivos = await resGithub.json();
+                
+                // Descargamos cada archivo .json individualmente
+                const promesas = archivos
+                    .filter(archivo => archivo.name.endsWith('.json'))
+                    .map(archivo => fetch(archivo.download_url).then(r => r.json()));
+                
+                const datosNuevos = await Promise.all(promesas);
+
+                // Mapeamos para que los nombres del Admin coincidan con tu lógica de 'Title' e 'Image'
+                perfumesNuevos = datosNuevos.map(p => ({
+                    id: p.id,
+                    marca: p.marca,
+                    Title: p.nombre,    // El admin usa 'nombre', el script usa 'Title'
+                    genero: p.genero,
+                    tipo: p.tipo,
+                    Image: p.imagen,    // El admin usa 'imagen', el script usa 'Image'
+                    descripcion: p.descripcion,
+                    categoria: p.tipo   // Usamos tipo como categoría para mantener tus filtros
+                }));
+            }
+        } catch (errorGit) {
+            console.log("No se detectaron perfumes nuevos en el Admin todavía.");
+        }
+
+        // 3. FUSIÓN: Los nuevos aparecen DE PRIMERO
+        perfumes = [...perfumesNuevos, ...perfumesBase];
 
         if(loader) loader.style.display = "none";
         renderMarcas(); 
