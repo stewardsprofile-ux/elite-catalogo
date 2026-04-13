@@ -1,124 +1,211 @@
 <!DOCTYPE html>
+
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>ELITE COSTA RICA - ORO 10K</title>
+
     <link rel="icon" type="image/png" href="assets/logo.png">
+
     <link rel="stylesheet" href="styles.css">
+
     <style>
+
         /* Botón de Regresar Sutil */
+
         .btn-regresar {
+
             position: absolute;
+
             top: 20px;
+
             left: 20px;
+
             background: rgba(255, 255, 255, 0.05);
+
             color: rgba(255, 255, 255, 0.6);
+
             border: 1px solid rgba(255, 255, 255, 0.1);
+
             padding: 8px 15px;
+
             border-radius: 5px;
+
             text-decoration: none;
+
             font-size: 12px;
+
             font-weight: 600;
+
             text-transform: uppercase;
+
             transition: all 0.3s ease;
+
         }
+
+
 
         .btn-regresar:hover {
+
             background: rgba(255, 255, 255, 0.1);
+
             color: #ffffff;
+
             border-color: rgba(255, 255, 255, 0.3);
+
         }
+
+
 
         /* Título Blanco sin resplandor */
+
         .titulo-oro {
+
             color: #ffffff !important;
-            text-shadow: none !important;
+
+            text-shadow: none !important; /* Resplandor eliminado */
+
             font-weight: 900;
+
             letter-spacing: 3px;
+
             text-transform: uppercase;
+
         }
+
+
 
         /* Unificación de tonos dorados brillantes para botones */
+
         .tipo-oro.active, .cat-oro.active {
+
             background: #D4AF37 !important;
+
             color: #10171f !important;
+
             border-color: #ffd700 !important;
+
             box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+
         }
+
+
 
         .filtros-principales button {
+
             border: 1px solid rgba(255, 215, 0, 0.3);
+
             transition: all 0.3s ease;
-            cursor: pointer;
+
         }
+
+
 
         .filtros-principales button:hover {
+
             border-color: #ffd700;
+
             background: rgba(212, 175, 55, 0.1);
+
         }
+
+
+
+        /* Ajuste para el header relativo por el botón posicionado */
 
         header {
+
             position: relative;
+
         }
-        
-        /* Estilo para el contenedor del catálogo */
-        #catalogoOro {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+
     </style>
+
 </head>
+
 <body>
 
+
+
 <header>
+
     <a href="index.html" class="btn-regresar">← Regresar a Elite Parfums</a>
 
+
+
     <img class="logo" src="assets/logo.png" alt="Elite Gold">
+
     <h1 class="titulo titulo-oro">ELITE COSTA RICA</h1>
 
+
+
     <div class="filtros-principales">
-        <button class="tipo-oro active" onclick="filtrarOro('Todos')">Todos</button>
-        <button class="tipo-oro" onclick="filtrarOro('Oro Nacional')">Oro Nacional</button>
-        <button class="tipo-oro" onclick="filtrarOro('Oro Italiano')">Oro Italiano</button>
+
+        <button class="tipo-oro active" data-tipo="Todos">Todos</button>
+
+        <button class="tipo-oro" data-tipo="Oro Nacional">Oro Nacional</button>
+
+        <button class="tipo-oro" data-tipo="Oro Italiano">Oro Italiano</button>
+
     </div>
+
+
 
     <div class="filtros-principales" style="margin-top: -10px;">
-        <button class="cat-oro" onclick="renderOro('Cadenas')">Cadenas</button>
-        <button class="cat-oro" onclick="renderOro('Pulseras')">Pulseras</button>
-        <button class="cat-oro" onclick="renderOro('Anillos')">Anillos</button>
-        <button class="cat-oro" onclick="renderOro('Argollas')">Argollas</button>
-        <button class="cat-oro" onclick="renderOro('Aretes')">Aretes</button>
+
+        <button class="cat-oro" data-cat="Cadenas">Cadenas</button>
+
+        <button class="cat-oro" data-cat="Pulseras">Pulseras</button>
+
+        <button class="cat-oro" data-cat="Anillos">Anillos</button>
+
+        <button class="cat-oro" data-cat="Argollas">Argollas</button>
+
+        <button class="cat-oro" data-cat="Aretes">Aretes</button>
+
     </div>
+
+
 
     <div class="testimonios-container">
+
         <a href="testimonios_oro.html" class="btn-testimonios" style="border: 2px solid #D4AF37; color: #ffd700; background: rgba(212, 175, 55, 0.05);">Testimonios Oro</a>
+
     </div>
+
 </header>
 
+
+
 <section id="seccion-reciente">
+
     <h2 style="text-align: center; color: #ffd700; text-transform: uppercase; font-size: 1.2em;">Lo Más Reciente</h2>
+
     <div class="contenedor-marcas-scroll">
+
         <button class="flecha-scroll" onclick="moverCarrusel(-1)">❮</button>
+
         <div id="carruselReciente" class="grid-marcas"></div>
+
         <button class="flecha-scroll" onclick="moverCarrusel(1)">❯</button>
+
     </div>
+
 </section>
 
-<div id="loaderOro" style="text-align: center; color: white; padding: 50px;">
-    <p>Cargando piezas exclusivas...</p>
-</div>
 
-<div id="catalogoOro"></div>
 
-<div id="visorImagen" style="display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; justify-content:center; align-items:center;" onclick="this.style.display='none'">
-    <img id="imagenGrande" src="" style="max-width: 90%; max-height: 90%; border: 2px solid #D4AF37; border-radius: 10px;">
-</div>
+<div id="catalogo-oro"></div>
+
+
 
 <script src="script_oro.js" defer></script>
+
 </body>
+
 </html>
