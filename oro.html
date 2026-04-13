@@ -9,13 +9,81 @@
     <style>
         .btn-regresar { position: absolute; top: 20px; left: 20px; background: rgba(255, 255, 255, 0.05); color: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); padding: 8px 15px; border-radius: 5px; text-decoration: none; font-size: 12px; font-weight: 600; text-transform: uppercase; transition: all 0.3s ease; z-index: 10; }
         .btn-regresar:hover { background: rgba(255, 255, 255, 0.1); color: #ffffff; border-color: rgba(255, 255, 255, 0.3); }
-        .titulo-oro { color: #ffffff !important; text-shadow: none !important; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; margin-top: 20px; }
+        .titulo-oro { color: #ffffff !important; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; margin-top: 20px; }
         .tipo-oro.active, .cat-oro.active { background: #D4AF37 !important; color: #10171f !important; border-color: #ffd700 !important; box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); }
-        .filtros-principales button { border: 1px solid rgba(255, 215, 0, 0.3); transition: all 0.3s ease; cursor: pointer; }
-        .filtros-principales button:hover { border-color: #ffd700; background: rgba(212, 175, 55, 0.1); }
-        header { position: relative; text-align: center; padding: 40px 20px; }
-        /* Grid del catálogo */
-        #catalogo-oro { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; padding: 20px; max-width: 1200px; margin: 0 auto; }
+        .filtros-principales button { border: 1px solid rgba(255, 215, 0, 0.3); transition: all 0.3s ease; cursor: pointer; border-radius: 20px; padding: 8px 15px; background: transparent; color: white; margin: 3px; }
+        header { position: relative; text-align: center; padding: 40px 10px; }
+
+        /* Contenedor principal de Tarjetas Full Width */
+        #catalogo-oro {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            padding: 10px;
+            max-width: 500px; /* Ancho ideal para lectura móvil */
+            margin: 0 auto;
+        }
+
+        /* Tarjeta Estilo Glass */
+        .card-oro-full {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 15px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-card-oro {
+            background: rgba(212, 175, 55, 0.1);
+            color: #D4AF37;
+            text-align: center;
+            padding: 8px;
+            font-size: 0.75em;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .card-oro-full img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .info-card-oro {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .info-card-oro h3 {
+            color: #fff;
+            margin: 0 0 10px 0;
+            font-size: 1.2em;
+            text-transform: uppercase;
+        }
+
+        .info-card-oro p {
+            color: #aaa;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+            white-space: pre-line;
+        }
+
+        /* Botón de Cotizar Centrado */
+        .btn-cotizar-oro-full {
+            background: linear-gradient(135deg, #D4AF37, #AA8928);
+            color: #000;
+            border: none;
+            padding: 15px;
+            border-radius: 50px;
+            font-weight: 900;
+            width: 100%;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
     </style>
 </head>
 <body>
@@ -26,26 +94,26 @@
     <h1 class="titulo titulo-oro">ELITE COSTA RICA</h1>
 
     <div class="filtros-principales">
-        <button class="tipo-oro active" data-tipo="Todos" onclick="filtrarOro('Todos')">Todos</button>
-        <button class="tipo-oro" data-tipo="Oro Nacional" onclick="filtrarOro('Oro Nacional')">Oro Nacional</button>
-        <button class="tipo-oro" data-tipo="Oro Italiano" onclick="filtrarOro('Oro Italiano')">Oro Italiano</button>
+        <button class="tipo-oro active" data-tipo="Todos" onclick="filtrarTipo('Todos')">Todos</button>
+        <button class="tipo-oro" data-tipo="Oro Nacional" onclick="filtrarTipo('Oro Nacional')">Oro Nacional</button>
+        <button class="tipo-oro" data-tipo="Oro Italiano" onclick="filtrarTipo('Oro Italiano')">Oro Italiano</button>
     </div>
 
     <div class="filtros-principales" style="margin-top: 10px;">
-        <button class="cat-oro" data-cat="Cadenas" onclick="filtrarOro('Cadenas')">Cadenas</button>
-        <button class="cat-oro" data-cat="Pulseras" onclick="filtrarOro('Pulseras')">Pulseras</button>
-        <button class="cat-oro" data-cat="Anillos" onclick="filtrarOro('Anillos')">Anillos</button>
-        <button class="cat-oro" data-cat="Argollas" onclick="filtrarOro('Argollas')">Argollas</button>
-        <button class="cat-oro" data-cat="Aretes" onclick="filtrarOro('Aretes')">Aretes</button>
+        <button class="cat-oro" data-cat="Cadenas" onclick="filtrarCat('Cadenas')">Cadenas</button>
+        <button class="cat-oro" data-cat="Pulseras" onclick="filtrarCat('Pulseras')">Pulseras</button>
+        <button class="cat-oro" data-cat="Anillos" onclick="filtrarCat('Anillos')">Anillos</button>
+        <button class="cat-oro" data-cat="Argollas" onclick="filtrarCat('Argollas')">Argollas</button>
+        <button class="cat-oro" data-cat="Aretes" onclick="filtrarCat('Aretes')">Aretes</button>
     </div>
 </header>
 
 <div id="catalogo-oro">
-    <p id="loaderOro" style="color: white; text-align: center; grid-column: 1/-1;">Cargando colección...</p>
+    <p id="loaderOro" style="color: white; text-align: center;">Cargando colección...</p>
 </div>
 
 <div id="visorImagen" onclick="this.style.display='none'" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:1000; justify-content:center; align-items:center;">
-    <img id="imagenGrande" src="" style="max-width:90%; max-height:90%; border: 3px solid #D4AF37;">
+    <img id="imagenGrande" src="" style="max-width:95%; max-height:95%; border: 2px solid #D4AF37; border-radius: 10px;">
 </div>
 
 <script src="script_oro.js" defer></script>

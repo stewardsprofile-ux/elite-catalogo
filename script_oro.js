@@ -1,10 +1,12 @@
 /* CONFIGURACIÓN ORO 10K - ELITE GOLD */
 const telefonoGold = "50662104761";
 let joyas = [];
-let filtroActualOro = "Todos";
 
-// Asegúrate de que estos IDs coincidan con el HTML
-const catalogoOro = document.getElementById("catalogo-oro"); 
+// Variables para Filtro Cruzado
+let filtroTipo = "Todos"; 
+let filtroCat = "Todos"; 
+
+const catalogoOro = document.getElementById("catalogo-oro");
 const loaderOro = document.getElementById("loaderOro");
 
 async function cargarOro() {
@@ -37,48 +39,57 @@ function renderOro() {
     if(!catalogoOro) return;
     catalogoOro.innerHTML = "";
 
-    const filtrados = joyas.filter(j => 
-        filtroActualOro === "Todos" || 
-        j.tipo === filtroActualOro || 
-        j.categoria === filtroActualOro
-    );
+    // Lógica de Filtro Cruzado (Tipo AND Categoría)
+    const filtrados = joyas.filter(j => {
+        const cumpleTipo = (filtroTipo === "Todos" || j.tipo === filtroTipo);
+        const cumpleCat = (filtroCat === "Todos" || j.categoria === filtroCat);
+        return cumpleTipo && cumpleCat;
+    });
 
     if(filtrados.length === 0) {
-        catalogoOro.innerHTML = `<p style="color:white; grid-column:1/-1; text-align:center; padding:40px;">No se encontraron piezas en "${filtroActualOro}".</p>`;
+        catalogoOro.innerHTML = `<p style="color:white; grid-column:1/-1; text-align:center; padding:40px;">No hay piezas que coincidan con "${filtroTipo}" y "${filtroCat}".</p>`;
         return;
     }
 
     filtrados.forEach(j => {
         const nombreDisplay = j.nombre || "Joya Elite";
-        // Decap guarda /assets/images/foto.jpg, lo usamos directo con el origen
         const urlFinal = window.location.origin + j.imagen;
 
         const card = document.createElement("div");
-        card.className = "card-oro";
+        card.className = "card-oro-full";
         card.innerHTML = `
-            <div class="tag-oro">${j.tipo || j.categoria || 'Oro 10K'}</div>
+            <div class="header-card-oro">${j.tipo}</div>
             <img src="${urlFinal}" alt="${nombreDisplay}" loading="lazy" 
                  onclick="verImagen('${urlFinal}')" 
                  onerror="this.src='assets/placeholder.webp'">
-            <h3>${nombreDisplay}</h3>
-            <p style="color: #bbb; font-size: 0.85em; margin-bottom: 10px;">${j.descripcion || ''}</p>
-            <button class="btn-cotizar-oro" onclick="cotizarJoya('${nombreDisplay}','${urlFinal}')">
-                Cotizar
-            </button>
+            <div class="info-card-oro">
+                <h3>${nombreDisplay}</h3>
+                <p>${j.descripcion || ''}</p>
+                <button class="btn-cotizar-oro-full" onclick="cotizarJoya('${nombreDisplay}','${urlFinal}')">
+                    COTIZAR AHORA
+                </button>
+            </div>
         `;
         catalogoOro.appendChild(card);
     });
 }
 
-function filtrarOro(valor) {
-    filtroActualOro = valor; 
-    actualizarEstadoBotonesOro(valor); 
-    renderOro(); 
+// Funciones de Filtro
+function filtrarTipo(valor) {
+    filtroTipo = valor;
+    actualizarBotones('tipo-oro', valor);
+    renderOro();
 }
 
-function actualizarEstadoBotonesOro(seleccionado) {
-    const botones = document.querySelectorAll('.tipo-oro, .cat-oro');
-    botones.forEach(boton => {
+function filtrarCat(valor) {
+    // Si toca la misma categoría ya activa, se limpia el filtro (opcional)
+    filtroCat = (filtroCat === valor) ? "Todos" : valor;
+    actualizarBotones('cat-oro', filtroCat);
+    renderOro();
+}
+
+function actualizarBotones(clase, seleccionado) {
+    document.querySelectorAll('.' + clase).forEach(boton => {
         const valorBoton = boton.getAttribute('data-tipo') || boton.getAttribute('data-cat');
         if (valorBoton === seleccionado) {
             boton.classList.add('active');
@@ -102,7 +113,6 @@ function verImagen(url){
     }
 }
 
-// Cerrar visor
 document.addEventListener('keydown', (e) => {
     if(e.key === "Escape") document.getElementById("visorImagen").style.display = "none";
 });
