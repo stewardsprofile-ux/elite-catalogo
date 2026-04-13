@@ -31,7 +31,7 @@ header {
     font-weight: 800;
 }
 
-/* 1. CONTENEDOR BUSCADOR Y BOTÓN IA */
+/* 1. BUSCADOR */
 .search-container {
     margin-bottom: 30px;
     display: flex;
@@ -57,38 +57,9 @@ header {
     border-radius: 50px;
     outline: none;
     transition: 0.3s;
-    min-width: 0;
 }
 
-#search:focus {
-    background: #ffffff;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-}
-
-.btn-ia-search {
-    flex: 1;
-    background: rgba(255, 255, 255, 0.05);
-    color: #ffffff;
-    border: 1px solid rgba(255, 215, 0, 0.4);
-    padding: 12px 15px;
-    border-radius: 50px;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    transition: 0.3s all;
-    white-space: nowrap;
-}
-
-.btn-ia-search:hover {
-    background: #ffffff;
-    color: #10171f;
-    border-color: #ffffff;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
-}
-
-/* 2. FILTROS PRINCIPALES - ESTILO GLASS */
+/* 2. FILTROS (BOTONES DORADOS) */
 .filtros-principales {
     display: flex;
     flex-wrap: wrap;
@@ -97,130 +68,39 @@ header {
     margin-bottom: 25px;
 }
 
-.filtros-principales button {
+.filtros-principales button, .cat-oro, .tipo-oro {
     padding: 10px 22px;
     border: 1px solid rgba(255, 255, 255, 0.1); 
     border-radius: 25px;
     background: rgba(255, 255, 255, 0.05); 
     color: #ffffff;
     cursor: pointer;
-    backdrop-filter: blur(10px); 
-    -webkit-backdrop-filter: blur(10px);
     transition: all 0.3s ease;
     font-weight: 600;
     font-size: 14px;
 }
 
-.filtros-principales button.active {
-    background: #D4AF37 !important; /* Dorado al estar activo */
+/* Estado Activo para los botones de clasificación */
+.filtros-principales button.active, .tipo-oro.active, .cat-oro.active {
+    background: #D4AF37 !important;
     color: #10171f !important;
     border-color: #ffd700 !important;
     box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
 }
 
-/* BOTONES ORO 10k PREMIUM */
-.btn-oro, .btn-seccion {
-    padding: 10px 22px;
-    border: 2px solid #D4AF37 !important;
-    border-radius: 25px;
-    background: rgba(212, 175, 55, 0.1) !important;
-    color: #ffd700 !important;
-    cursor: pointer;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
-    font-weight: 800;
-    font-size: 14px;
-    text-transform: uppercase;
-    box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.btn-oro:hover, .btn-seccion:hover {
-    background: #D4AF37 !important;
-    color: #10171f !important;
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
-    transform: translateY(-2px);
-}
-
-/* 3. SECCIÓN DE MARCAS / CARRUSEL */
-.contenedor-marcas-scroll {
-    position: relative;
-    max-width: 1000px;
-    margin: 0 auto 25px auto;
-    display: flex;
-    align-items: center;
-    padding: 0 40px; 
-}
-
-.grid-marcas {
-    display: flex;
-    flex-wrap: nowrap; 
-    overflow-x: auto; 
-    scroll-behavior: smooth;
-    gap: 12px;
-    padding: 10px 0;
-    scrollbar-width: none;
-}
-.grid-marcas::-webkit-scrollbar { display: none; }
-
-.btn-marca {
-    flex: 0 0 auto; 
-    padding: 8px 16px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 8px;
-    font-size: 11px;
-    color: #a0aab4;
-    cursor: pointer;
-    text-transform: uppercase;
-}
-
-.btn-marca.active {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.15);
-    border-bottom: 3px solid #ffffff; 
-}
-
-.flecha-scroll {
-    background: none; 
-    border: none; 
-    font-size: 22px;
-    color: #ffffff;
-    cursor: pointer;
-    padding: 0 10px;
-    transition: 0.3s;
-    opacity: 0.6; 
-}
-
-/* 4. SECCIÓN TESTIMONIOS */
-.btn-testimonios {
-    display: inline-block;
-    padding: 12px 30px;
-    background: rgba(255,255,255,0.08);
-    color: white;
-    text-decoration: none;
-    border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.1);
-    backdrop-filter: blur(5px);
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-/* CATALOGOS GENERALES */
+/* 3. CATALOGOS (GRID REPARADO) */
 #catalogo, #catalogoOro {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Evita que se encimen */
     gap: 30px;
-    padding: 40px;
+    padding: 20px;
     max-width: 1400px;
     margin: auto;
     justify-items: center;
+    align-items: start; /* Alinea arriba para que no se estiren */
 }
 
-/* TARJETA UNIFICADA (Perfumes y Oro) */
+/* TARJETA UNIFICADA */
 .card, .card-oro {
     background: #ffffff; 
     border-radius: 20px;
@@ -229,50 +109,37 @@ header {
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     transition: transform 0.3s ease;
     width: 100%;
-    max-width: 300px;
+    max-width: 300px; /* Tamaño estable */
     display: flex;
     flex-direction: column;
-    align-items: center;
+    box-sizing: border-box; /* Crucial para el padding */
 }
 
 .card:hover, .card-oro:hover {
     transform: translateY(-5px);
 }
 
-/* AJUSTE IMÁGENES ORO PEQUEÑAS */
-.card-oro img {
-    width: 200px; 
-    height: 200px; 
-    object-fit: contain;
-    margin: 10px 0;
+/* FOTOS MÁS GRANDES */
+.card img, .card-oro img { 
+    width: 100%; 
+    height: 280px; /* Aumentado */
+    object-fit: contain; 
+    margin-bottom: 15px;
     cursor: pointer;
 }
 
-/* IMÁGENES PERFUMES */
-.card img { 
-    width: 100%; 
-    height: 300px; 
-    object-fit: contain; 
-}
-
 .card h3, .card-oro h3 { 
-    font-size: 15px; 
+    font-size: 16px; 
     color: #10171f; 
-    margin: 15px 0; 
+    margin: 10px 0; 
     font-weight: 700; 
-    min-height: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.card-oro p {
-    font-size: 14px;
-    color: #a0aab4;
-    margin-bottom: 15px;
-}
-
-/* BOTÓN COTIZAR (Diseño Negro Redondeado) */
+/* BOTÓN COTIZAR (NEGRO REDONDEADO) */
 .btn, .btn-cotizar-oro {
     background: #10171f;
     color: #ffffff;
@@ -283,7 +150,7 @@ header {
     font-weight: bold;
     width: 100%;
     transition: 0.3s;
-    font-size: 14px;
+    margin-top: auto; /* Empuja el botón al fondo de la tarjeta */
 }
 
 .btn:hover, .btn-cotizar-oro:hover {
@@ -296,57 +163,11 @@ header {
     text-transform: uppercase;
     color: #D4AF37;
     background: rgba(212, 175, 55, 0.1);
-    padding: 4px 12px;
+    padding: 5px 12px;
     border-radius: 20px;
     font-weight: 700;
     margin-bottom: 10px;
-}
-
-/* BOTONES FLOTANTES */
-.whatsapp-float { position: fixed; bottom: 25px; left: 25px; z-index: 1000; }
-.whatsapp-float img { width: 45px; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.4)); }
-
-#btnArriba {
-    position: fixed;
-    bottom: 25px;
-    right: 25px; 
-    background: #ffffff;
-    color: #10171f;
-    border: none;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    display: none;
-    z-index: 1000;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-}
-
-/* ASISTENTE IA MODAL */
-#bot-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.95); 
-    display: none; 
-    justify-content: center; 
-    align-items: center;      
-    z-index: 3000;
-    overflow-y: auto; 
-    padding: 20px 0;
-}
-
-.bot-content {
-    width: 90%;
-    max-width: 500px;
-    background: #10171f;
-    border-radius: 20px;
-    padding: 25px;
-    position: relative;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    margin: auto; 
+    display: inline-block;
 }
 
 /* VISOR DE IMÁGENES */
@@ -360,25 +181,12 @@ header {
     align-items: center;
 }
 
-#imagenGrande {
-    max-width: 90%;
-    max-height: 90%;
-    border: 2px solid #D4AF37;
-    border-radius: 10px;
-}
-
-/* RESPONSIVE MÓVIL */
+/* RESPONSIVE */
 @media (max-width: 600px) {
     #catalogo, #catalogoOro { 
-        grid-template-columns: repeat(2, 1fr); 
-        gap: 15px; 
+        grid-template-columns: repeat(1, 1fr); /* 1 columna en móviles para que se vea grande */
         padding: 15px; 
     }
-    .card img { height: 180px; }
-    .card-oro img { width: 140px; height: 140px; }
-    .titulo { font-size: 24px; }
-    
-    .search-box-wrapper { flex-direction: column; width: 100%; }
-    #search { max-width: 100%; width: 100%; }
-    .btn-ia-search { width: 100%; }
+    .card, .card-oro { max-width: 100%; }
+    .card img, .card-oro img { height: 250px; }
 }
