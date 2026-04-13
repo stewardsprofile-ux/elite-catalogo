@@ -33,7 +33,7 @@
         /* Título Blanco sin resplandor */
         .titulo-oro {
             color: #ffffff !important;
-            text-shadow: none !important; /* Resplandor eliminado */
+            text-shadow: none !important;
             font-weight: 900;
             letter-spacing: 3px;
             text-transform: uppercase;
@@ -50,6 +50,7 @@
         .filtros-principales button {
             border: 1px solid rgba(255, 215, 0, 0.3);
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .filtros-principales button:hover {
@@ -57,9 +58,18 @@
             background: rgba(212, 175, 55, 0.1);
         }
 
-        /* Ajuste para el header relativo por el botón posicionado */
         header {
             position: relative;
+        }
+        
+        /* Estilo para el contenedor del catálogo */
+        #catalogoOro {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
     </style>
 </head>
@@ -72,17 +82,17 @@
     <h1 class="titulo titulo-oro">ELITE COSTA RICA</h1>
 
     <div class="filtros-principales">
-        <button class="tipo-oro active" data-tipo="Todos">Todos</button>
-        <button class="tipo-oro" data-tipo="Oro Nacional">Oro Nacional</button>
-        <button class="tipo-oro" data-tipo="Oro Italiano">Oro Italiano</button>
+        <button class="tipo-oro active" onclick="filtrarOro('Todos')">Todos</button>
+        <button class="tipo-oro" onclick="filtrarOro('Oro Nacional')">Oro Nacional</button>
+        <button class="tipo-oro" onclick="filtrarOro('Oro Italiano')">Oro Italiano</button>
     </div>
 
     <div class="filtros-principales" style="margin-top: -10px;">
-        <button class="cat-oro" data-cat="Cadenas">Cadenas</button>
-        <button class="cat-oro" data-cat="Pulseras">Pulseras</button>
-        <button class="cat-oro" data-cat="Anillos">Anillos</button>
-        <button class="cat-oro" data-cat="Argollas">Argollas</button>
-        <button class="cat-oro" data-cat="Aretes">Aretes</button>
+        <button class="cat-oro" onclick="renderOro('Cadenas')">Cadenas</button>
+        <button class="cat-oro" onclick="renderOro('Pulseras')">Pulseras</button>
+        <button class="cat-oro" onclick="renderOro('Anillos')">Anillos</button>
+        <button class="cat-oro" onclick="renderOro('Argollas')">Argollas</button>
+        <button class="cat-oro" onclick="renderOro('Aretes')">Aretes</button>
     </div>
 
     <div class="testimonios-container">
@@ -99,7 +109,15 @@
     </div>
 </section>
 
-<div id="catalogo-oro"></div>
+<div id="loaderOro" style="text-align: center; color: white; padding: 50px;">
+    <p>Cargando piezas exclusivas...</p>
+</div>
+
+<div id="catalogoOro"></div>
+
+<div id="visorImagen" style="display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; justify-content:center; align-items:center;" onclick="this.style.display='none'">
+    <img id="imagenGrande" src="" style="max-width: 90%; max-height: 90%; border: 2px solid #D4AF37; border-radius: 10px;">
+</div>
 
 <script src="script_oro.js" defer></script>
 </body>

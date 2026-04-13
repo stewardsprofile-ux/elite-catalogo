@@ -13,37 +13,33 @@ async function cargarOro() {
         const repo = "elite-catalogo";
         const folderPath = "assets/data/oro";
         
-        // 1. Intentar conectar con GitHub
+        // 1. Conexión con la API de GitHub
         const resGithub = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${folderPath}`);
         
         if (resGithub.ok) {
             const archivos = await resGithub.json();
             
-            // 2. Descargar archivos .json individuales
-            const promesas = archivos
-                .filter(archivo => archivo.name.endsWith('.json'))
-                .map(archivo => fetch(archivo.download_url).then(r => r.json()));
+            // 2. Filtramos solo los archivos .json y descargamos
+            const archivosJson = archivos.filter(a => a.name.endsWith('.json'));
             
-            const piezasNuevas = await Promise.all(promesas);
+            const promesas = archivosJson.map(archivo => 
+                fetch(archivo.download_url).then(r => r.json())
+            );
             
-            // 3. Validar: Aceptamos piezas que tengan 'nombre' O 'titulo' (según el CMS)
-            joyas = piezasNuevas.filter(j => j && (j.nombre || j.titulo));
+            const resultados = await Promise.all(promesas);
             
-            console.log("Joyas cargadas con éxito:", joyas.length);
-        } else {
-            console.warn("La carpeta de oro no responde o está vacía.");
+            // 3. Guardamos los resultados (sin filtros estrictos para que no falle)
+            joyas = resultados;
+            console.log("Datos cargados de GitHub:", joyas);
         }
-
     } catch (err) {
-        console.error("Error crítico cargando joyería:", err);
+        console.error("Error en la carga:", err);
     } finally {
-        // Quitamos el loader y renderizamos pase lo que pase
         if(loaderOro) loaderOro.style.display = "none";
         renderOro();
     }
 }
 
-// Ejecutar carga inicial
 cargarOro();
 
 /* RENDERIZAR JOYAS */
@@ -51,43 +47,36 @@ function renderOro(filtroTipo = "Todos") {
     if(!catalogoOro) return;
     catalogoOro.innerHTML = "";
 
+    // Filtrar por tipo si es necesario
     const filtrados = joyas.filter(j => 
         filtroTipo === "Todos" || j.tipo === filtroTipo
     );
 
     if(filtrados.length === 0) {
-        catalogoOro.innerHTML = `
-            <div style="grid-column: 1/-1; text-align:center; padding:40px; color:#aaa;">
-                <p>No hay piezas disponibles en esta categoría por el momento.</p>
-            </div>`;
+        catalogoOro.innerHTML = `<p style="color:white; grid-column:1/-1; text-align:center; padding:20px;">No se encontraron piezas en esta categoría.</p>`;
         return;
     }
 
-    const lista = filtrados.slice(0, visiblesOro);
-
-    lista.forEach(j => {
-        // Soporte para ambos nombres de campo del CMS
-        const nombreJoya = j.nombre || j.titulo || "Pieza Exclusiva";
+    filtrados.forEach(j => {
+        // SOLUCIÓN AL CAMBIO DE NOMBRE: Si no existe 'nombre', usa 'titulo'
+        const nombreDisplay = j.nombre || j.titulo || "Joya Elite";
         
-        // Limpieza de ruta de imagen para evitar errores de barra doble o falta de barra
-        let rutaRaw = j.imagen || 'assets/placeholder.webp';
-        let rutaLimpia = rutaRaw.startsWith('/') ? rutaRaw.substring(1) : rutaRaw;
+        // SOLUCIÓN A LA RUTA DE IMAGEN:
+        let imgPath = j.imagen || "";
+        if(imgPath.startsWith('/')) imgPath = imgPath.substring(1);
         
-        // Construimos la URL completa para la imagen
-        const urlFinalImagen = `${window.location.origin}/${rutaLimpia}`;
+        // Forzamos la URL absoluta para que no falle
+        const urlFinal = window.location.origin + "/" + imgPath;
 
         const card = document.createElement("div");
         card.className = "card-oro"; 
         card.innerHTML = `
-            <img src="${urlFinalImagen}" 
-                 loading="lazy" 
-                 onclick="verImagen('${rutaLimpia}')" 
-                 onerror="this.src='assets/placeholder.webp'">
+            <img src="${urlFinal}" alt="${nombreDisplay}" loading="lazy" onclick="verImagen('${imgPath}')" onerror="this.src='assets/placeholder.webp'">
             <div class="info-oro">
-                <span class="tag-oro">${j.tipo || 'Joyas'}</span>
-                <h3>${nombreJoya}</h3>
-                <p>${j.categoria || 'Oro 10K'}</p>
-                <button class="btn-cotizar-oro" onclick="cotizarJoya('${nombreJoya}','${rutaLimpia}')">
+                <span class="tag-oro">${j.tipo || 'Oro 10K'}</span>
+                <h3>${nombreDisplay}</h3>
+                <p>${j.categoria || 'Colección Exclusiva'}</p>
+                <button class="btn-cotizar-oro" onclick="cotizarJoya('${nombreDisplay}','${imgPath}')">
                     Consultar Precio
                 </button>
             </div>
@@ -96,25 +85,21 @@ function renderOro(filtroTipo = "Todos") {
     });
 }
 
-/* LÓGICA DE WHATSAPP PARA ORO */
+/* WHATSAPP */
 function cotizarJoya(nombre, imagen) {
-    const urlImagen = `${window.location.origin}/${imagen}`;
-    const mensaje = `¡Hola! ✨ Me interesa esta pieza de *Oro 10K* que vi en el catálogo:\n\n*Pieza:* ${nombre}\n\nReferencia: ${urlImagen}`;
+    const urlRef = window.location.origin + "/" + imagen;
+    const mensaje = `¡Hola! ✨ Me interesa esta pieza de *Oro 10K*:\n\n*Pieza:* ${nombre}\n\nReferencia: ${urlRef}`;
     window.open(`https://wa.me/${telefonoGold}?text=${encodeURIComponent(mensaje)}`, "_blank");
 }
 
-/* UTILIDADES */
+/* VISOR */
 function verImagen(img){ 
     const visor = document.getElementById("visorImagen");
     const imgGrande = document.getElementById("imagenGrande");
     if(visor && imgGrande) {
-        // Si la imagen ya es una URL completa la usa, si no, construye la ruta
-        imgGrande.src = img.startsWith('http') ? img : `${window.location.origin}/${img}`;
+        imgGrande.src = window.location.origin + "/" + img;
         visor.style.display = "flex"; 
     }
 }
 
-// Control de filtros
-function filtrarOro(tipo) {
-    renderOro(tipo);
-}
+function irAOro() { window.location.href = "oro.html"; }
