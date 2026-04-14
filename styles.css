@@ -147,13 +147,6 @@ header {
     justify-content: center;
 }
 
-.btn-oro:hover, .btn-seccion:hover {
-    background: #D4AF37 !important;
-    color: #10171f !important;
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
-    transform: translateY(-2px);
-}
-
 /* ==========================================================================
    3. SECCIÓN DE MARCAS (FLECHAS MINIMALISTAS ACTUALIZADAS)
    ========================================================================== */
@@ -163,7 +156,7 @@ header {
     margin: 0 auto 25px auto;
     display: flex;
     align-items: center;
-    padding: 0; /* Sin padding para borde a borde real */
+    padding: 0;
 }
 
 .grid-marcas {
@@ -172,7 +165,7 @@ header {
     overflow-x: auto;
     scroll-behavior: smooth;
     gap: 12px;
-    padding: 10px 35px; /* Espacio para que las flechas no tapen el texto */
+    padding: 10px 35px;
     scrollbar-width: none;
 }
 .grid-marcas::-webkit-scrollbar { display: none; }
@@ -189,7 +182,6 @@ header {
     text-transform: uppercase;
 }
 
-/* FLECHAS MINIMALISTAS (SIN BOTÓN) */
 .flecha-scroll {
     background: transparent !important;
     border: none !important;
@@ -202,7 +194,7 @@ header {
     cursor: pointer;
     z-index: 10;
     position: absolute;
-    font-size: 20px; /* Tamaño de la flecha */
+    font-size: 22px;
     box-shadow: none !important;
     backdrop-filter: none !important;
 }
@@ -309,7 +301,7 @@ header {
 }
 
 /* ==========================================================================
-   6. ASISTENTE IA (ESTÁTICO DE BORDE A BORDE)
+   6. ASISTENTE IA (BORDE A BORDE TOTAL)
    ========================================================================== */
 #bot-modal {
     position: fixed;
@@ -317,43 +309,46 @@ header {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.98); /* Un poco más oscuro para enfoque total */
+    background: #10171f; /* Fondo sólido para que sea estático */
     display: none;
     justify-content: center;
-    align-items: center;
-    z-index: 3000;
-    padding: 0; /* Eliminado padding para borde a borde */
+    align-items: flex-start;
+    z-index: 9999;
+    padding: 0;
     box-sizing: border-box;
 }
 
 .bot-content {
     width: 100%;
-    max-width: 100%; /* Borde a borde real en celular */
-    height: 100%; /* Ocupa todo el alto */
+    height: 100%;
     background: #10171f;
-    border-radius: 0; /* Estático, sin esquinas redondeadas en este modo */
-    padding: 40px 20px;
     border: none;
+    padding: 60px 0px 40px 0px;
     text-align: center;
     box-shadow: none;
-    overflow-y: auto; /* Permite scroll si hay muchas preguntas */
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .bot-content h2 {
-    margin-top: 10px;
-    font-size: 1.5rem;
-    margin-bottom: 25px;
+    margin-top: 0;
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    padding: 0 20px;
 }
 
 .btn-pregunta {
     display: block;
-    width: 100%;
+    width: 90%;
+    max-width: 480px;
     background: rgba(255, 255, 255, 0.05);
     color: white;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 18px;
+    padding: 20px;
     margin-bottom: 12px;
-    border-radius: 15px;
+    border-radius: 12px;
     font-size: 16px;
     cursor: pointer;
     text-align: left;
@@ -361,7 +356,7 @@ header {
 }
 
 /* ==========================================================================
-   FLOTANTES
+   FLOTANTES Y RESPONSIVE
    ========================================================================== */
 .whatsapp-float { position: fixed; bottom: 25px; left: 25px; z-index: 1000; }
 .whatsapp-float img { width: 45px; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.4)); }
@@ -370,17 +365,12 @@ header {
     position: fixed; bottom: 25px; right: 25px; background: #ffffff;
     color: #10171f; border: none; width: 45px; height: 45px;
     border-radius: 50%; display: none; z-index: 1000; cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
-/* ==========================================================================
-   RESPONSIVE MÓVIL
-   ========================================================================== */
 @media (max-width: 600px) {
     #catalogo { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 15px; }
     .card img { height: 180px; }
     .titulo { font-size: 24px; }
-
     .search-box-wrapper { flex-direction: column; width: 100%; }
     #search { max-width: 100%; width: 100%; }
     .btn-ia-search { width: 100%; flex: none; }
@@ -394,8 +384,11 @@ header {
         font-size: 15px;
     }
     
-    /* El modal se mantiene borde a borde en responsive */
     .bot-content {
-        padding: 40px 15px;
+        padding: 40px 0px;
+    }
+    
+    .btn-pregunta {
+        width: 92%;
     }
 }
