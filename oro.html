@@ -10,8 +10,16 @@
         .btn-regresar { position: absolute; top: 20px; left: 20px; background: rgba(255, 255, 255, 0.05); color: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); padding: 8px 15px; border-radius: 5px; text-decoration: none; font-size: 12px; font-weight: 600; text-transform: uppercase; transition: all 0.3s ease; z-index: 10; }
         .btn-regresar:hover { background: rgba(255, 255, 255, 0.1); color: #ffffff; border-color: rgba(255, 255, 255, 0.3); }
         .titulo-oro { color: #ffffff !important; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; margin-top: 20px; }
-        .tipo-oro.active, .cat-oro.active { background: #D4AF37 !important; color: #10171f !important; border-color: #ffd700 !important; box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); }
-        .filtros-principales button { border: 1px solid rgba(255, 215, 0, 0.3); transition: all 0.3s ease; cursor: pointer; border-radius: 20px; padding: 8px 15px; background: transparent; color: white; margin: 3px; }
+        
+        /* Estilos de botones activos para todas las categorías de filtro */
+        .tipo-oro.active, .gen-oro.active, .cat-oro.active { 
+            background: #D4AF37 !important; 
+            color: #10171f !important; 
+            border-color: #ffd700 !important; 
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); 
+        }
+
+        .filtros-principales button { border: 1px solid rgba(255, 215, 0, 0.3); transition: all 0.3s ease; cursor: pointer; border-radius: 20px; padding: 8px 15px; background: transparent; color: white; margin: 3px; font-size: 13px; }
         header { position: relative; text-align: center; padding: 40px 10px; }
 
         /* Contenedor principal de Tarjetas Full Width */
@@ -20,7 +28,7 @@
             flex-direction: column;
             gap: 25px;
             padding: 10px;
-            max-width: 500px; /* Ancho ideal para lectura móvil */
+            max-width: 500px;
             margin: 0 auto;
         }
 
@@ -71,7 +79,6 @@
             white-space: pre-line;
         }
 
-        /* Botón de Cotizar Centrado */
         .btn-cotizar-oro-full {
             background: linear-gradient(135deg, #D4AF37, #AA8928);
             color: #000;
@@ -94,17 +101,24 @@
     <h1 class="titulo titulo-oro">ELITE COSTA RICA</h1>
 
     <div class="filtros-principales">
-        <button class="tipo-oro active" data-tipo="Todos" onclick="filtrarTipo('Todos')">Todos</button>
-        <button class="tipo-oro" data-tipo="Oro Nacional" onclick="filtrarTipo('Oro Nacional')">Oro Nacional</button>
-        <button class="tipo-oro" data-tipo="Oro Italiano" onclick="filtrarTipo('Oro Italiano')">Oro Italiano</button>
+        <button class="tipo-oro active" data-val="Todos" onclick="filtrarTipo('Todos')">Todos</button>
+        <button class="tipo-oro" data-val="Oro Nacional" onclick="filtrarTipo('Oro Nacional')">Oro Nacional</button>
+        <button class="tipo-oro" data-val="Oro Italiano" onclick="filtrarTipo('Oro Italiano')">Oro Italiano</button>
     </div>
 
     <div class="filtros-principales" style="margin-top: 10px;">
-        <button class="cat-oro" data-cat="Cadenas" onclick="filtrarCat('Cadenas')">Cadenas</button>
-        <button class="cat-oro" data-cat="Pulseras" onclick="filtrarCat('Pulseras')">Pulseras</button>
-        <button class="cat-oro" data-cat="Anillos" onclick="filtrarCat('Anillos')">Anillos</button>
-        <button class="cat-oro" data-cat="Argollas" onclick="filtrarCat('Argollas')">Argollas</button>
-        <button class="cat-oro" data-cat="Aretes" onclick="filtrarCat('Aretes')">Aretes</button>
+        <button class="gen-oro active" data-val="Todos" onclick="filtrarGenero('Todos')">Todos</button>
+        <button class="gen-oro" data-val="Hombre" onclick="filtrarGenero('Hombre')">Hombre</button>
+        <button class="gen-oro" data-val="Mujer" onclick="filtrarGenero('Mujer')">Mujer</button>
+        <button class="gen-oro" data-val="Niños" onclick="filtrarGenero('Niños')">Niños</button>
+    </div>
+
+    <div class="filtros-principales" style="margin-top: 10px;">
+        <button class="cat-oro" data-val="Cadenas" onclick="filtrarCat('Cadenas')">Cadenas</button>
+        <button class="cat-oro" data-val="Pulseras" onclick="filtrarCat('Pulseras')">Pulseras</button>
+        <button class="cat-oro" data-val="Anillos" onclick="filtrarCat('Anillos')">Anillos</button>
+        <button class="cat-oro" data-val="Argollas" onclick="filtrarCat('Argollas')">Argollas</button>
+        <button class="cat-oro" data-val="Aretes" onclick="filtrarCat('Aretes')">Aretes</button>
     </div>
 </header>
 

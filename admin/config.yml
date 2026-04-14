@@ -38,6 +38,7 @@ collections:
       - { label: "ID Pieza", name: "id", widget: "string" }
       - { label: "Nombre de la Pieza", name: "nombre", widget: "string" }
       - { label: "Tipo de Oro", name: "tipo", widget: "select", options: ["Oro Nacional", "Oro Italiano"] }
+      - { label: "Género", name: "genero", widget: "select", options: ["Hombre", "Mujer", "Niños", "Unisex"] }
       - { label: "Categoría", name: "categoria", widget: "select", options: ["Cadenas", "Pulseras", "Anillos", "Argollas", "Aretes"] }
       - { label: "Imagen", name: "imagen", widget: "image" }
       - { label: "Descripción / Detalles", name: "descripcion", widget: "text" }
