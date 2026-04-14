@@ -155,7 +155,7 @@ header {
 }
 
 /* ==========================================================================
-   3. SECCIÓN DE MARCAS (FLECHAS MINIMALISTAS)
+   3. SECCIÓN DE MARCAS (FLECHAS MINIMALISTAS ACTUALIZADAS)
    ========================================================================== */
 .contenedor-marcas-scroll {
     position: relative;
@@ -163,7 +163,7 @@ header {
     margin: 0 auto 25px auto;
     display: flex;
     align-items: center;
-    padding: 0; 
+    padding: 0; /* Sin padding para borde a borde real */
 }
 
 .grid-marcas {
@@ -172,7 +172,7 @@ header {
     overflow-x: auto;
     scroll-behavior: smooth;
     gap: 12px;
-    padding: 10px 45px; /* Espacio para que las flechas no tapen el texto */
+    padding: 10px 35px; /* Espacio para que las flechas no tapen el texto */
     scrollbar-width: none;
 }
 .grid-marcas::-webkit-scrollbar { display: none; }
@@ -189,33 +189,26 @@ header {
     text-transform: uppercase;
 }
 
-/* FLECHAS MINIMALISTAS SIN BOTONES OVALADOS */
+/* FLECHAS MINIMALISTAS (SIN BOTÓN) */
 .flecha-scroll {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.1) !important;
-    backdrop-filter: blur(5px);
+    background: transparent !important;
     border: none !important;
     color: #ffffff !important;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
+    width: 30px;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     z-index: 10;
-    box-shadow: none;
-    transition: 0.3s;
+    position: absolute;
+    font-size: 20px; /* Tamaño de la flecha */
+    box-shadow: none !important;
+    backdrop-filter: none !important;
 }
 
-.flecha-scroll:hover {
-    background: rgba(255, 255, 255, 0.2) !important;
-}
-
-.flecha-scroll:first-of-type { left: 5px; }
-.flecha-scroll:last-of-type { right: 5px; }
+.flecha-scroll:first-of-type { left: 0; }
+.flecha-scroll:last-of-type { right: 0; }
 
 .btn-testimonios {
     display: inline-block;
@@ -319,28 +312,36 @@ header {
    6. ASISTENTE IA (ESTÁTICO DE BORDE A BORDE)
    ========================================================================== */
 #bot-modal {
-    position: relative; /* Cambiado de fixed a relative para ser estático */
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    background: #10171f;
-    display: none; /* Se activa por JS */
+    height: 100%;
+    background: rgba(0, 0, 0, 0.98); /* Un poco más oscuro para enfoque total */
+    display: none;
     justify-content: center;
     align-items: center;
-    padding: 40px 0;
+    z-index: 3000;
+    padding: 0; /* Eliminado padding para borde a borde */
     box-sizing: border-box;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .bot-content {
     width: 100%;
-    max-width: 600px; /* Controla el ancho del contenido interno */
-    padding: 20px;
+    max-width: 100%; /* Borde a borde real en celular */
+    height: 100%; /* Ocupa todo el alto */
+    background: #10171f;
+    border-radius: 0; /* Estático, sin esquinas redondeadas en este modo */
+    padding: 40px 20px;
+    border: none;
     text-align: center;
+    box-shadow: none;
+    overflow-y: auto; /* Permite scroll si hay muchas preguntas */
 }
 
 .bot-content h2 {
-    margin-top: 0;
-    font-size: 1.8rem;
+    margin-top: 10px;
+    font-size: 1.5rem;
     margin-bottom: 25px;
 }
 
@@ -391,5 +392,10 @@ header {
         display: flex;
         padding: 12px 0;
         font-size: 15px;
+    }
+    
+    /* El modal se mantiene borde a borde en responsive */
+    .bot-content {
+        padding: 40px 15px;
     }
 }
