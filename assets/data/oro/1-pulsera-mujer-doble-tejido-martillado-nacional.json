@@ -1,9 +1,10 @@
 {
   "reciente": true,
-  "id": "Pulsera mujer doble tejido martillado nacional",
-  "nombre": "Pulsera mujer doble tejido martillado nacional",
+  "id": "Pulsera doble tejido martillado nacional",
+  "nombre": "Pulsera doble tejido martillado nacional",
   "tipo": "Oro Nacional",
   "categoria": "Pulseras",
   "imagen": "/assets/images/photo_2026-04-13_09-26-42.jpg",
-  "descripcion": " "
+  "descripcion": " ",
+  "genero": "Mujer"
 }
