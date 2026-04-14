@@ -32,7 +32,7 @@ header {
 }
 
 /* ==========================================================================
-   1. BUSCADOR Y BOTÓN IA
+   1. BUSCADOR Y BOTÓN IA (ALINEADOS)
    ========================================================================== */
 .search-container {
     margin-bottom: 30px;
@@ -83,8 +83,15 @@ header {
     white-space: nowrap;
 }
 
+.btn-ia-search:hover {
+    background: #ffffff;
+    color: #10171f;
+    border-color: #ffffff;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+}
+
 /* ==========================================================================
-   2. FILTROS Y ESTADOS ACTIVOS
+   2. FILTROS PRINCIPALES - ESTILO GLASS
    ========================================================================== */
 .filtros-principales {
     display: flex;
@@ -114,11 +121,11 @@ header {
     border-color: #ffffff;
 }
 
-/* Estado activo ORO */
 .tipo-oro.active, .gen-oro.active, .cat-oro.active {
     background: #D4AF37 !important;
     color: #10171f !important;
     border-color: #ffd700 !important;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
 }
 
 .btn-oro, .btn-seccion {
@@ -128,15 +135,27 @@ header {
     background: rgba(212, 175, 55, 0.1) !important;
     color: #ffd700 !important;
     cursor: pointer;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
     font-weight: 800;
+    font-size: 14px;
     text-transform: uppercase;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
     display: inline-flex;
     align-items: center;
     justify-content: center;
 }
 
+.btn-oro:hover, .btn-seccion:hover {
+    background: #D4AF37 !important;
+    color: #10171f !important;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+    transform: translateY(-2px);
+}
+
 /* ==========================================================================
-   3. MARCAS (FLECHAS GLASS)
+   3. SECCIÓN DE MARCAS (FLECHAS GLASS ACTUALIZADAS)
    ========================================================================== */
 .contenedor-marcas-scroll {
     position: relative;
@@ -144,7 +163,7 @@ header {
     margin: 0 auto 25px auto;
     display: flex;
     align-items: center;
-    padding: 0 10px; /* Reducido para dar más espacio a los botones */
+    padding: 0 5px; /* Reducido para mejor ajuste de flechas */
 }
 
 .grid-marcas {
@@ -152,7 +171,7 @@ header {
     flex-wrap: nowrap;
     overflow-x: auto;
     scroll-behavior: smooth;
-    gap: 10px;
+    gap: 12px;
     padding: 10px 0;
     scrollbar-width: none;
 }
@@ -167,33 +186,42 @@ header {
     font-size: 11px;
     color: #a0aab4;
     cursor: pointer;
+    text-transform: uppercase;
 }
 
-/* FLECHAS ESTILO GLASS */
+/* FLECHAS ESTILO GLASS (SIN FONDO BLANCO) */
 .flecha-scroll {
     background: rgba(255, 255, 255, 0.05) !important;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    width: 35px;
-    height: 35px;
-    color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     z-index: 10;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.btn-testimonios {
+    display: inline-block;
+    padding: 12px 30px;
+    background: rgba(255,255,255,0.08);
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(5px);
+    font-weight: bold;
     transition: 0.3s;
 }
 
-.flecha-scroll:hover {
-    background: rgba(255, 255, 255, 0.2) !important;
-    transform: scale(1.1);
-}
-
 /* ==========================================================================
-   4. CATALOGO Y TARJETAS
+   4. CATALOGO PRINCIPAL
    ========================================================================== */
 #catalogo {
     display: grid;
@@ -209,16 +237,31 @@ header {
     border-radius: 20px;
     padding: 20px;
     text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
 .card img { width: 100%; height: 300px; object-fit: contain; }
+.card h3 { font-size: 15px; color: #10171f; margin: 15px 0; font-weight: 700; height: 40px; }
 
-/* ORO FULL WIDTH */
+.btn {
+    background: #10171f;
+    color: #ffffff;
+    border: none;
+    padding: 14px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+}
+
+/* ==========================================================================
+   5. CATALOGO ORO
+   ========================================================================== */
 #catalogo-oro {
     display: flex;
     flex-direction: column;
     gap: 25px;
-    padding: 15px;
+    padding: 10px;
     max-width: 500px;
     margin: 0 auto;
 }
@@ -229,10 +272,41 @@ header {
     border-radius: 15px;
     overflow: hidden;
     backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+}
+
+.header-card-oro {
+    background: rgba(212, 175, 55, 0.1);
+    color: #D4AF37;
+    text-align: center;
+    padding: 8px;
+    font-size: 0.75em;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.card-oro-full img { width: 100%; height: auto; display: block; }
+
+.info-card-oro { padding: 20px; text-align: center; }
+.info-card-oro h3 { color: #fff; margin: 0 0 10px 0; font-size: 1.2em; text-transform: uppercase; }
+.info-card-oro p { color: #aaa; font-size: 0.9em; margin-bottom: 20px; white-space: pre-line; }
+
+.btn-cotizar-oro-full {
+    background: linear-gradient(135deg, #D4AF37, #AA8928);
+    color: #000;
+    border: none;
+    padding: 15px;
+    border-radius: 50px;
+    font-weight: 900;
+    width: 100%;
+    cursor: pointer;
+    text-transform: uppercase;
 }
 
 /* ==========================================================================
-   5. ASISTENTE IA (MODAL CENTRADO Y AJUSTADO)
+   6. ASISTENTE IA (CORREGIDO: CENTRADO DE BORDE A BORDE)
    ========================================================================== */
 #bot-modal {
     position: fixed;
@@ -243,21 +317,27 @@ header {
     background: rgba(0, 0, 0, 0.95);
     display: none;
     justify-content: center;
-    align-items: center; /* Asegura el centrado vertical */
+    align-items: center;
     z-index: 3000;
-    padding: 15px; /* Espacio para que no toque el borde del cel */
+    padding: 15px;
     box-sizing: border-box;
 }
 
 .bot-content {
     width: 100%;
-    max-width: 450px; /* Ancho cómodo para móvil y desktop */
+    max-width: 480px; /* Ancho ideal móvil */
     background: #10171f;
     border-radius: 25px;
-    padding: 30px 20px;
+    padding: 35px 20px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
     text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+}
+
+.bot-content h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    margin-bottom: 25px;
 }
 
 .btn-pregunta {
@@ -275,9 +355,17 @@ header {
     transition: 0.2s;
 }
 
-.btn-pregunta:hover {
-    background: #ffffff;
-    color: #10171f;
+/* ==========================================================================
+   FLOTANTES
+   ========================================================================== */
+.whatsapp-float { position: fixed; bottom: 25px; left: 25px; z-index: 1000; }
+.whatsapp-float img { width: 45px; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.4)); }
+
+#btnArriba {
+    position: fixed; bottom: 25px; right: 25px; background: #ffffff;
+    color: #10171f; border: none; width: 45px; height: 45px;
+    border-radius: 50%; display: none; z-index: 1000; cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
 /* ==========================================================================
@@ -288,20 +376,22 @@ header {
     .card img { height: 180px; }
     .titulo { font-size: 24px; }
 
-    /* Buscador apilado */
-    .search-box-wrapper { flex-direction: column; }
-    .btn-ia-search { width: 100%; }
+    .search-box-wrapper { flex-direction: column; width: 100%; }
+    #search { max-width: 100%; width: 100%; }
+    .btn-ia-search { width: 100%; flex: none; }
 
-    /* Ajuste de botones de sección */
     .btn-oro, .btn-seccion {
         width: 100%;
         max-width: 320px;
         margin: 5px auto;
+        display: flex;
+        padding: 12px 0;
+        font-size: 15px;
     }
-
-    /* Centrado del Asistente en Móvil */
+    
+    /* Centrado total del modal en móvil */
     .bot-content {
-        padding: 25px 15px;
-        margin-top: 0;
+        margin: 0;
+        padding: 30px 15px;
     }
 }
