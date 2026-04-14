@@ -32,7 +32,7 @@ header {
 }
 
 /* ==========================================================================
-   1. BUSCADOR Y BOTÓN IA (ALINEADOS)
+   1. BUSCADOR Y BOTÓN IA
    ========================================================================== */
 .search-container {
     margin-bottom: 30px;
@@ -83,15 +83,8 @@ header {
     white-space: nowrap;
 }
 
-.btn-ia-search:hover {
-    background: #ffffff;
-    color: #10171f;
-    border-color: #ffffff;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
-}
-
 /* ==========================================================================
-   2. FILTROS PRINCIPALES - ESTILO GLASS
+   2. FILTROS Y ESTADOS ACTIVOS
    ========================================================================== */
 .filtros-principales {
     display: flex;
@@ -115,22 +108,19 @@ header {
     font-size: 14px;
 }
 
-/* Estado activo general (Perfumes) */
 .filtros-principales button.active {
     background: #ffffff;
     color: #10171f;
     border-color: #ffffff;
 }
 
-/* Estado activo específico (ORO) - No rompe el de perfumes */
+/* Estado activo ORO */
 .tipo-oro.active, .gen-oro.active, .cat-oro.active {
     background: #D4AF37 !important;
     color: #10171f !important;
     border-color: #ffd700 !important;
-    box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
 }
 
-/* BOTÓN ORO 10k PREMIUM (Sincronizado con .btn-seccion) */
 .btn-oro, .btn-seccion {
     padding: 10px 22px;
     border: 2px solid #D4AF37 !important;
@@ -138,27 +128,15 @@ header {
     background: rgba(212, 175, 55, 0.1) !important;
     color: #ffd700 !important;
     cursor: pointer;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
     font-weight: 800;
-    font-size: 14px;
     text-transform: uppercase;
-    box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
     display: inline-flex;
     align-items: center;
     justify-content: center;
 }
 
-.btn-oro:hover, .btn-seccion:hover {
-    background: #D4AF37 !important;
-    color: #10171f !important;
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
-    transform: translateY(-2px);
-}
-
 /* ==========================================================================
-   3. SECCIÓN DE MARCAS Y TESTIMONIOS
+   3. MARCAS (FLECHAS GLASS)
    ========================================================================== */
 .contenedor-marcas-scroll {
     position: relative;
@@ -166,7 +144,7 @@ header {
     margin: 0 auto 25px auto;
     display: flex;
     align-items: center;
-    padding: 0 40px;
+    padding: 0 10px; /* Reducido para dar más espacio a los botones */
 }
 
 .grid-marcas {
@@ -174,7 +152,7 @@ header {
     flex-wrap: nowrap;
     overflow-x: auto;
     scroll-behavior: smooth;
-    gap: 12px;
+    gap: 10px;
     padding: 10px 0;
     scrollbar-width: none;
 }
@@ -189,30 +167,33 @@ header {
     font-size: 11px;
     color: #a0aab4;
     cursor: pointer;
-    text-transform: uppercase;
 }
 
-.btn-marca.active {
+/* FLECHAS ESTILO GLASS */
+.flecha-scroll {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
     color: #ffffff;
-    background: rgba(255, 255, 255, 0.15);
-    border-bottom: 3px solid #ffffff;
-}
-
-.btn-testimonios {
-    display: inline-block;
-    padding: 12px 30px;
-    background: rgba(255,255,255,0.08);
-    color: white;
-    text-decoration: none;
-    border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.1);
-    backdrop-filter: blur(5px);
-    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
     transition: 0.3s;
 }
 
+.flecha-scroll:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    transform: scale(1.1);
+}
+
 /* ==========================================================================
-   4. CATALOGO PRINCIPAL (PERFUMES - TARJETAS BLANCAS)
+   4. CATALOGO Y TARJETAS
    ========================================================================== */
 #catalogo {
     display: grid;
@@ -228,31 +209,16 @@ header {
     border-radius: 20px;
     padding: 20px;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
 .card img { width: 100%; height: 300px; object-fit: contain; }
-.card h3 { font-size: 15px; color: #10171f; margin: 15px 0; font-weight: 700; height: 40px; }
 
-.btn {
-    background: #10171f;
-    color: #ffffff;
-    border: none;
-    padding: 14px 20px;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: bold;
-    width: 100%;
-}
-
-/* ==========================================================================
-   5. CATALOGO ORO (TARJETAS OSCURAS FULL WIDTH)
-   ========================================================================== */
+/* ORO FULL WIDTH */
 #catalogo-oro {
     display: flex;
     flex-direction: column;
     gap: 25px;
-    padding: 10px;
+    padding: 15px;
     max-width: 500px;
     margin: 0 auto;
 }
@@ -263,56 +229,55 @@ header {
     border-radius: 15px;
     overflow: hidden;
     backdrop-filter: blur(10px);
-    display: flex;
-    flex-direction: column;
-}
-
-.header-card-oro {
-    background: rgba(212, 175, 55, 0.1);
-    color: #D4AF37;
-    text-align: center;
-    padding: 8px;
-    font-size: 0.75em;
-    font-weight: bold;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-}
-
-.card-oro-full img { width: 100%; height: auto; display: block; }
-
-.info-card-oro { padding: 20px; text-align: center; }
-.info-card-oro h3 { color: #fff; margin: 0 0 10px 0; font-size: 1.2em; text-transform: uppercase; }
-.info-card-oro p { color: #aaa; font-size: 0.9em; margin-bottom: 20px; white-space: pre-line; }
-
-.btn-cotizar-oro-full {
-    background: linear-gradient(135deg, #D4AF37, #AA8928);
-    color: #000;
-    border: none;
-    padding: 15px;
-    border-radius: 50px;
-    font-weight: 900;
-    width: 100%;
-    cursor: pointer;
-    text-transform: uppercase;
 }
 
 /* ==========================================================================
-   FLOTANTES Y MODALES
+   5. ASISTENTE IA (MODAL CENTRADO Y AJUSTADO)
    ========================================================================== */
-.whatsapp-float { position: fixed; bottom: 25px; left: 25px; z-index: 1000; }
-.whatsapp-float img { width: 45px; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.4)); }
-
-#btnArriba {
-    position: fixed; bottom: 25px; right: 25px; background: #ffffff;
-    color: #10171f; border: none; width: 45px; height: 45px;
-    border-radius: 50%; display: none; z-index: 1000; cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+#bot-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    display: none;
+    justify-content: center;
+    align-items: center; /* Asegura el centrado vertical */
+    z-index: 3000;
+    padding: 15px; /* Espacio para que no toque el borde del cel */
+    box-sizing: border-box;
 }
 
-#bot-modal {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.95); display: none;
-    justify-content: center; align-items: center; z-index: 3000;
+.bot-content {
+    width: 100%;
+    max-width: 450px; /* Ancho cómodo para móvil y desktop */
+    background: #10171f;
+    border-radius: 25px;
+    padding: 30px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    text-align: center;
+}
+
+.btn-pregunta {
+    display: block;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 18px;
+    margin-bottom: 12px;
+    border-radius: 15px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: left;
+    transition: 0.2s;
+}
+
+.btn-pregunta:hover {
+    background: #ffffff;
+    color: #10171f;
 }
 
 /* ==========================================================================
@@ -323,16 +288,20 @@ header {
     .card img { height: 180px; }
     .titulo { font-size: 24px; }
 
-    .search-box-wrapper { flex-direction: column; width: 100%; }
-    #search { max-width: 100%; width: 100%; }
-    .btn-ia-search { width: 100%; flex: none; }
+    /* Buscador apilado */
+    .search-box-wrapper { flex-direction: column; }
+    .btn-ia-search { width: 100%; }
 
+    /* Ajuste de botones de sección */
     .btn-oro, .btn-seccion {
         width: 100%;
         max-width: 320px;
         margin: 5px auto;
-        display: flex;
-        padding: 12px 0;
-        font-size: 15px;
+    }
+
+    /* Centrado del Asistente en Móvil */
+    .bot-content {
+        padding: 25px 15px;
+        margin-top: 0;
     }
 }
