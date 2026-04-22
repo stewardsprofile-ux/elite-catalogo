@@ -1,0 +1,59 @@
+{
+  "genero": "Hombre",
+  "categoria": "Pulseras",
+  "grupos": [
+    {
+      "tipo": "Oro Italiano",
+      "imagenes": [
+        {
+          "imagen": "assets/images/35e85e88-31dd-4a94-9871-acc86a1c2860.jpg"
+        },
+        {
+          "imagen": "assets/images/49026577-9272-4e83-9c9c-d5a867628819.jpg"
+        },
+        {
+          "imagen": "assets/images/51dd63e6-7a06-4116-bff4-0f9890499590.jpg"
+        },
+        {
+          "imagen": "assets/images/68a141f6-17f7-4f9e-9f26-a665121cf365.jpg"
+        },
+        {
+          "imagen": "assets/images/194f26ef-dd51-407b-99e8-fc0b03050cbe.jpg"
+        },
+        {
+          "imagen": "assets/images/2cfcce67-d100-4b14-8200-c7e9506e2532.jpg"
+        },
+        {
+          "imagen": "assets/images/6978b120-9b97-4801-9be6-6eac6df0bbfe.jpg"
+        },
+        {
+          "imagen": "assets/images/833c05de-f2bd-4e62-ba5d-8a7d1e78e50f.jpg"
+        },
+        {
+          "imagen": "assets/images/80a58f50-e222-4b96-81a1-f25ab813c43c.jpg"
+        },
+        {
+          "imagen": "assets/images/91ba9f3f-b4e1-4f26-b267-add0eed3b6ff.jpg"
+        },
+        {
+          "imagen": "assets/images/93da121e-2a09-4b89-8820-e3126b744e0a.jpg"
+        },
+        {
+          "imagen": "assets/images/95a0ecc5-1d61-44da-8484-3ab819370de1.jpg"
+        },
+        {
+          "imagen": "assets/images/7e8aaedc-79ef-41c4-9c4a-d1ea59be8e23.jpg"
+        },
+        {
+          "imagen": "assets/images/98819d43-c0c9-4428-8a37-e45d38345310.jpg"
+        },
+        {
+          "imagen": "assets/images/4ad4ae97-3fc9-44cf-8b29-b2cf9ce2c2df.jpg"
+        },
+        {
+          "imagen": "assets/images/eae6e8b7-041d-4b36-aefd-d6b3e236710d.jpg"
+        }
+      ]
+    }
+  ]
+}
