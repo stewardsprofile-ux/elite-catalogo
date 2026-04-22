@@ -1,0 +1,17 @@
+{
+  "genero": "Mujer",
+  "categoria": "Pulseras",
+  "grupos": [
+    {
+      "tipo": "Oro Italiano",
+      "imagenes": [
+        {
+          "imagen": "assets/images/148a1b5b-6621-446f-8479-a9eb7c065419.jpg"
+        },
+        {
+          "imagen": "assets/images/fa4b175e-6c4f-4aa7-80af-6c0a9f934fab.jpg"
+        }
+      ]
+    }
+  ]
+}
