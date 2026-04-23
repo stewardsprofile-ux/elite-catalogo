@@ -405,8 +405,8 @@ header {
     .search-container { margin-bottom: 14px; padding: 0 12px; }
     .search-box-wrapper { flex-direction: column; width: 100%; gap: 10px; }
     .btn-ia-search { width: 100%; flex: none; }
-    .filtros-principales { gap: 6px; margin-bottom: 8px; }
-    .filtros-principales button { padding: 8px 12px; font-size: 12px; }
+    .filtros-principales { gap: 5px; margin-bottom: 8px; }
+    .filtros-principales button { padding: 8px 10px; font-size: 11px; }
     .seccion-oro-container { margin: 0 0 3px; }
     .contenedor-marcas-scroll { margin: 0 auto 2px auto; }
     .grid-marcas { gap: 8px; padding: 6px 26px; }
@@ -444,6 +444,20 @@ header {
     .search-box-wrapper { flex-direction: column; width: 100%; }
     #search { max-width: 100%; width: 100%; }
     .btn-ia-search { width: 100%; flex: none; }
+
+    header > .filtros-principales:first-of-type {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 5px;
+        align-items: center;
+    }
+
+    header > .filtros-principales:first-of-type button {
+        width: 100%;
+        min-width: 0;
+        padding: 8px 4px;
+        font-size: 10px;
+    }
 
     .btn-oro, .btn-seccion {
         width: 100%;
