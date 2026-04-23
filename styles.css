@@ -147,6 +147,12 @@ header {
     justify-content: center;
 }
 
+.seccion-oro-container {
+    display: flex;
+    justify-content: center;
+    margin: 2px 0 6px;
+}
+
 /* ==========================================================================
    3. SECCIÓN DE MARCAS (FLECHAS MINIMALISTAS ACTUALIZADAS)
    ========================================================================== */
@@ -399,12 +405,13 @@ header {
     .search-container { margin-bottom: 14px; padding: 0 12px; }
     .search-box-wrapper { flex-direction: column; width: 100%; gap: 10px; }
     .btn-ia-search { width: 100%; flex: none; }
-    .filtros-principales { gap: 8px; margin-bottom: 12px; }
-    .filtros-principales button { padding: 9px 18px; }
-    .contenedor-marcas-scroll { margin: 0 auto 10px auto; }
+    .filtros-principales { gap: 6px; margin-bottom: 8px; }
+    .filtros-principales button { padding: 8px 12px; font-size: 12px; }
+    .seccion-oro-container { margin: 0 0 3px; }
+    .contenedor-marcas-scroll { margin: 0 auto 2px auto; }
     .grid-marcas { gap: 8px; padding: 6px 26px; }
     .btn-marca { padding: 8px 14px; font-size: 10px; }
-    .btn-testimonios { margin-top: 2px; padding: 11px 24px; }
+    .btn-testimonios { margin-top: 0; padding: 10px 22px; }
 }
 
 /* ==========================================================================
@@ -440,11 +447,11 @@ header {
 
     .btn-oro, .btn-seccion {
         width: 100%;
-        max-width: 320px;
-        margin: 5px auto;
+        max-width: 300px;
+        margin: 0 auto;
         display: flex;
-        padding: 12px 0;
-        font-size: 15px;
+        padding: 9px 0;
+        font-size: 13px;
     }
     
     .bot-content {

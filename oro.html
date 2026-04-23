@@ -110,10 +110,32 @@
             .btn-regresar { top: 14px; left: 14px; padding: 7px 12px; }
             .logo { margin-bottom: 6px !important; }
             .titulo-oro { margin: 8px 0 16px 0 !important; }
-            .filtros-principales { gap: 8px !important; margin-bottom: 10px !important; }
+            .filtros-principales { gap: 6px !important; margin-bottom: 8px !important; }
             .filtros-principales[style] { margin-top: 0 !important; }
-            .filtros-principales button { margin: 2px; padding: 8px 14px; }
-            .btn-testimonios-oro { margin-top: 8px; padding: 11px 24px; }
+            .filtros-principales button { margin: 1px; padding: 7px 10px; font-size: 12px; }
+            .row-categorias-oro {
+                display: grid;
+                grid-template-columns: repeat(5, minmax(0, 1fr));
+                align-items: center;
+            }
+            .row-categorias-oro button {
+                width: 100%;
+                min-width: 0;
+                padding: 7px 4px;
+                font-size: 10px;
+            }
+            .row-especiales-oro {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                align-items: center;
+            }
+            .row-especiales-oro button {
+                width: 100%;
+                min-width: 0;
+                padding: 7px 6px;
+                font-size: 11px;
+            }
+            .btn-testimonios-oro { margin-top: 4px; padding: 10px 22px; }
         }
     </style>
 </head>
@@ -124,20 +146,20 @@
     <img class="logo" src="assets/logo.png" alt="Elite Gold" style="width: 80px;">
     <h1 class="titulo titulo-oro">ELITE COSTA RICA</h1>
 
-    <div class="filtros-principales">
+    <div class="filtros-principales row-tipo-oro">
         <button class="tipo-oro active" data-val="Todos" onclick="filtrarTipo('Todos')">Todos</button>
         <button class="tipo-oro" data-val="Oro Nacional" onclick="filtrarTipo('Oro Nacional')">Oro Nacional</button>
         <button class="tipo-oro" data-val="Oro Italiano" onclick="filtrarTipo('Oro Italiano')">Oro Italiano</button>
     </div>
 
-    <div class="filtros-principales" style="margin-top: 10px;">
+    <div class="filtros-principales row-genero-oro" style="margin-top: 10px;">
         <button class="gen-oro active" data-val="Todos" onclick="filtrarGenero('Todos')">Todos</button>
         <button class="gen-oro" data-val="Hombre" onclick="filtrarGenero('Hombre')">Hombre</button>
         <button class="gen-oro" data-val="Mujer" onclick="filtrarGenero('Mujer')">Mujer</button>
         <button class="gen-oro" data-val="Niños" onclick="filtrarGenero('Niños')">Niños</button>
     </div>
 
-    <div class="filtros-principales" style="margin-top: 10px;">
+    <div class="filtros-principales row-categorias-oro" style="margin-top: 10px;">
         <button class="cat-oro" data-val="Cadenas" onclick="filtrarCat('Cadenas')">Cadenas</button>
         <button class="cat-oro" data-val="Pulseras" onclick="filtrarCat('Pulseras')">Pulseras</button>
         <button class="cat-oro" data-val="Anillos" onclick="filtrarCat('Anillos')">Anillos</button>
@@ -145,7 +167,7 @@
         <button class="cat-oro" data-val="Aretes" onclick="filtrarCat('Aretes')">Aretes</button>
     </div>
 
-    <div class="filtros-principales" style="margin-top: 10px;">
+    <div class="filtros-principales row-especiales-oro" style="margin-top: 10px;">
         <button class="cat-oro-especial" data-val="Graduacion" onclick="filtrarCatEspecial('Graduacion')">Graduacion</button>
         <button class="cat-oro-especial" data-val="15 Años" onclick="filtrarCatEspecial('15 Años')">15 Años</button>
         <button class="cat-oro-especial" data-val="Matrimonio" onclick="filtrarCatEspecial('Matrimonio')">Matrimonio</button>
