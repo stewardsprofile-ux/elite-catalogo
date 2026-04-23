@@ -118,12 +118,20 @@
                 justify-content: center !important;
                 flex-wrap: nowrap !important;
                 gap: 8px !important;
+                width: 100%;
+                overflow-x: auto;
             }
             .row-tipo-oro button {
-                min-width: 0;
-                white-space: nowrap;
-                padding: 8px 12px;
-                font-size: 11px;
+                flex: 0 0 auto;
+                width: auto !important;
+                min-width: auto !important;
+                max-width: none !important;
+                white-space: nowrap !important;
+                word-break: keep-all !important;
+                overflow-wrap: normal !important;
+                line-height: 1 !important;
+                padding: 8px 11px !important;
+                font-size: 10px !important;
             }
             .row-categorias-oro {
                 display: grid;
