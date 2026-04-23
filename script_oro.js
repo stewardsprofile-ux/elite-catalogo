@@ -320,14 +320,7 @@ function enlacePiezaJoya(joya) {
 }
 
 function cotizarJoya(joya) {
-    const nombre = joya?.nombre || "Pieza de oro";
-    const detalle = [
-        joya?.tipo,
-        categoriasEspecialesOro.includes(joya?.categoria) ? joya?.categoria : joya?.genero,
-        !categoriasEspecialesOro.includes(joya?.categoria) ? joya?.categoria : ""
-    ].filter(Boolean).join(" | ");
-
-    const mensaje = `Hola, me interesa esta pieza de oro:\n*${nombre}*\n${detalle ? `${detalle}\n` : ""}Link: ${enlacePiezaJoya(joya)}`;
+    const mensaje = `Me interesa esta pieza de oro este es el Link: ${enlacePiezaJoya(joya)}\n\nme lo puedes cotizar, Por Favor?`;
     window.open(`https://wa.me/${telefonoGold}?text=${encodeURIComponent(mensaje)}`, "_blank");
 }
 
