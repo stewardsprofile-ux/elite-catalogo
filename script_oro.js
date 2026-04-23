@@ -304,8 +304,8 @@ function slugWhatsApp(texto) {
         .replace(/^-+|-+$/g, "");
 }
 
-function enlaceCatalogoJoya(joya) {
-    const baseUrl = new URL("/oro.html", window.location.origin);
+function enlacePiezaJoya(joya) {
+    const baseUrl = new URL("/pieza.html", window.location.origin);
     const params = new URLSearchParams();
 
     if (joya?.tipo) params.set("tipo", joya.tipo);
@@ -321,13 +321,13 @@ function enlaceCatalogoJoya(joya) {
 
 function cotizarJoya(joya) {
     const nombre = joya?.nombre || "Pieza de oro";
-    const referencia = [
+    const detalle = [
         joya?.tipo,
         categoriasEspecialesOro.includes(joya?.categoria) ? joya?.categoria : joya?.genero,
         !categoriasEspecialesOro.includes(joya?.categoria) ? joya?.categoria : ""
     ].filter(Boolean).join(" | ");
 
-    const mensaje = `Hola, me interesa esta pieza de oro:\n*${nombre}*\n${referencia ? `Referencia: ${referencia}\n` : ""}Catalogo: ${enlaceCatalogoJoya(joya)}`;
+    const mensaje = `Hola, me interesa esta pieza de oro:\n*${nombre}*\n${detalle ? `${detalle}\n` : ""}Link: ${enlacePiezaJoya(joya)}`;
     window.open(`https://wa.me/${telefonoGold}?text=${encodeURIComponent(mensaje)}`, "_blank");
 }
 
