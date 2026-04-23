@@ -39,6 +39,7 @@ const repoBranch = "main";
 
 const catalogoOro = document.getElementById("catalogo-oro");
 const loaderOro = document.getElementById("loaderOro");
+const btnArribaOro = document.getElementById("btnArribaOro");
 
 async function cargarJsonDesdeGithub(folderPath) {
     const user = "stewardsprofile-ux";
@@ -305,7 +306,7 @@ function slugWhatsApp(texto) {
 }
 
 function enlacePiezaJoya(joya) {
-    const baseUrl = new URL("/pieza.html", window.location.origin);
+    const baseUrl = new URL("/pieza", window.location.origin);
     const params = new URLSearchParams();
 
     if (joya?.tipo) params.set("tipo", joya.tipo);
@@ -334,6 +335,10 @@ function verImagen(url) {
 }
 
 window.addEventListener("scroll", () => {
+    if (btnArribaOro) {
+        btnArribaOro.style.display = window.scrollY > 500 ? "block" : "none";
+    }
+
     if (cargandoMasOro) return;
 
     const totalFiltrados = joyas.filter((joya) => {
@@ -354,5 +359,11 @@ window.addEventListener("scroll", () => {
         }, 200);
     }
 });
+
+if (btnArribaOro) {
+    btnArribaOro.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+}
 
 cargarOro();

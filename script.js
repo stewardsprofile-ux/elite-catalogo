@@ -263,7 +263,7 @@ if(btnArriba) {
 
 // Función para redirigir a la sección de Oro
 function irAOro() {
-    window.location.href = "oro.html";
+    window.location.href = "/oro";
 }
 
 // ==========================================
