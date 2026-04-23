@@ -20,35 +20,50 @@
         }
 
         .filtros-principales button { border: 1px solid rgba(255, 215, 0, 0.3); transition: all 0.3s ease; cursor: pointer; border-radius: 20px; padding: 8px 15px; background: transparent; color: white; margin: 3px; font-size: 13px; }
+        .btn-testimonios-oro {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 18px;
+            padding: 12px 26px;
+            border-radius: 999px;
+            border: 1px solid rgba(212, 175, 55, 0.28);
+            background: rgba(212, 175, 55, 0.12);
+            color: #D4AF37;
+            text-decoration: none;
+            font-weight: 800;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+            backdrop-filter: blur(10px);
+        }
         header { position: relative; text-align: center; padding: 40px 10px; }
 
-        /* Contenedor principal de Tarjetas Full Width */
+        /* Catalogo en grid amplio */
         #catalogo-oro {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            padding: 10px;
-            max-width: 500px;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 28px;
+            padding: 20px 40px 50px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
-        /* Tarjeta Estilo Glass */
         .card-oro-full {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 15px;
+            background: #161d26;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
             overflow: hidden;
-            backdrop-filter: blur(10px);
             display: flex;
             flex-direction: column;
+            min-height: 100%;
         }
 
         .header-card-oro {
-            background: rgba(212, 175, 55, 0.1);
+            background: #1a212b;
             color: #D4AF37;
             text-align: center;
-            padding: 8px;
-            font-size: 0.75em;
+            padding: 12px 14px;
+            font-size: 0.82em;
             font-weight: bold;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -56,40 +71,41 @@
 
         .card-oro-full img {
             width: 100%;
-            height: auto;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            background: #161d26;
             display: block;
+            cursor: pointer;
         }
 
         .info-card-oro {
-            padding: 20px;
-            text-align: center;
-        }
-
-        .info-card-oro h3 {
-            color: #fff;
-            margin: 0 0 10px 0;
-            font-size: 1.2em;
-            text-transform: uppercase;
-        }
-
-        .info-card-oro p {
-            color: #aaa;
-            font-size: 0.9em;
-            margin-bottom: 20px;
-            white-space: pre-line;
+            padding: 14px 20px 20px;
+            margin-top: auto;
         }
 
         .btn-cotizar-oro-full {
-            background: linear-gradient(135deg, #D4AF37, #AA8928);
-            color: #000;
-            border: none;
-            padding: 15px;
-            border-radius: 50px;
-            font-weight: 900;
+            background: rgba(212, 175, 55, 0.12);
+            color: #D4AF37;
+            border: 1px solid rgba(212, 175, 55, 0.32);
+            backdrop-filter: blur(10px);
+            padding: 16px;
+            border-radius: 14px;
+            font-weight: 800;
             width: 100%;
             cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 1rem;
+        }
+
+        .btn-cotizar-oro-full:hover {
+            background: rgba(212, 175, 55, 0.18);
+        }
+
+        @media (max-width: 1100px) {
+            #catalogo-oro { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 20px; }
+        }
+
+        @media (max-width: 640px) {
+            #catalogo-oro { grid-template-columns: 1fr; gap: 20px; padding: 15px; }
         }
     </style>
 </head>
@@ -120,6 +136,14 @@
         <button class="cat-oro" data-val="Argollas" onclick="filtrarCat('Argollas')">Argollas</button>
         <button class="cat-oro" data-val="Aretes" onclick="filtrarCat('Aretes')">Aretes</button>
     </div>
+
+    <div class="filtros-principales" style="margin-top: 10px;">
+        <button class="cat-oro-especial" data-val="Graduacion" onclick="filtrarCatEspecial('Graduacion')">Graduacion</button>
+        <button class="cat-oro-especial" data-val="15 Años" onclick="filtrarCatEspecial('15 Años')">15 Años</button>
+        <button class="cat-oro-especial" data-val="Matrimonio" onclick="filtrarCatEspecial('Matrimonio')">Matrimonio</button>
+    </div>
+
+    <a href="testimonios.html" class="btn-testimonios-oro">Testimonios</a>
 </header>
 
 <div id="catalogo-oro">

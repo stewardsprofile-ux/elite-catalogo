@@ -1,86 +1,334 @@
-/* CONFIGURACIÓN ORO 10K - ELITE GOLD */
+/* CONFIGURACION ORO 10K - ELITE GOLD */
 const telefonoGold = "50662104761";
 let joyas = [];
+let visiblesOro = 12;
+let cargandoMasOro = false;
+const lotesOroLocales = [
+    "assets/data/oro-lotes/hombre-cadenas.json",
+    "assets/data/oro-lotes/hombre-pulseras.json",
+    "assets/data/oro-lotes/hombre-anillos.json",
+    "assets/data/oro-lotes/hombre-argollas.json",
+    "assets/data/oro-lotes/hombre-aretes.json",
+    "assets/data/oro-lotes/mujer-cadenas.json",
+    "assets/data/oro-lotes/mujer-pulseras.json",
+    "assets/data/oro-lotes/mujer-anillos.json",
+    "assets/data/oro-lotes/mujer-argollas.json",
+    "assets/data/oro-lotes/mujer-aretes.json",
+    "assets/data/oro-lotes/ninos-cadenas.json",
+    "assets/data/oro-lotes/ninos-pulseras.json",
+    "assets/data/oro-lotes/ninos-anillos.json",
+    "assets/data/oro-lotes/ninos-argollas.json",
+    "assets/data/oro-lotes/ninos-aretes.json",
+    "assets/data/oro-lotes/unisex-cadenas.json",
+    "assets/data/oro-lotes/unisex-pulseras.json",
+    "assets/data/oro-lotes/unisex-anillos.json",
+    "assets/data/oro-lotes/unisex-argollas.json",
+    "assets/data/oro-lotes/unisex-aretes.json",
+    "assets/data/oro-lotes/especiales-graduacion.json",
+    "assets/data/oro-lotes/especiales-anos.json",
+    "assets/data/oro-lotes/especiales-matrimonio.json"
+];
 
-// Variables para Filtro Triple
-let filtroTipo = "Todos"; 
+let filtroTipo = "Todos";
 let filtroGenero = "Todos";
-let filtroCat = "Todos"; 
+let filtroCat = "Todos";
+const categoriasEspecialesOro = ["Graduacion", "15 Años", "Matrimonio"];
+const repoOwner = "stewardsprofile-ux";
+const repoName = "elite-catalogo";
+const repoBranch = "main";
 
 const catalogoOro = document.getElementById("catalogo-oro");
+const loaderOro = document.getElementById("loaderOro");
+
+async function cargarJsonDesdeGithub(folderPath) {
+    const user = "stewardsprofile-ux";
+    const repo = "elite-catalogo";
+
+    try {
+        const res = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${folderPath}`);
+        if (!res.ok) return [];
+
+        const archivos = await res.json();
+        const jsonFiles = archivos.filter((archivo) => archivo.name.endsWith(".json"));
+
+        const data = await Promise.all(
+            jsonFiles.map(async (archivo) => {
+                try {
+                    const jsonRes = await fetch(archivo.download_url);
+                    if (!jsonRes.ok) return null;
+                    return await jsonRes.json();
+                } catch (error) {
+                    console.error("No se pudo cargar", archivo.name, error);
+                    return null;
+                }
+            })
+        );
+
+        return data.filter(Boolean);
+    } catch (error) {
+        console.error("Error cargando carpeta", folderPath, error);
+        return [];
+    }
+}
+
+async function cargarJsonLocales(paths) {
+    const data = await Promise.all(
+        paths.map(async (path) => {
+            try {
+                const res = await fetch(`https://raw.githubusercontent.com/${repoOwner}/${repoName}/${repoBranch}/${path}?t=${Date.now()}`);
+                if (!res.ok) return null;
+                return await res.json();
+            } catch (error) {
+                console.error("No se pudo cargar", path, error);
+                return null;
+            }
+        })
+    );
+
+    return data.filter(Boolean);
+}
+
+function capitalizarNombre(texto) {
+    return String(texto || "")
+        .toLowerCase()
+        .replace(/\b([a-záéíóúñ])/g, (match) => match.toUpperCase())
+        .trim();
+}
+
+function nombreDesdeImagen(ruta, fallback = "Pieza de oro") {
+    const base = String(ruta || "")
+        .split("/")
+        .pop()
+        .split("?")[0]
+        .replace(/\.[^.]+$/, "")
+        .replace(/[_-]+/g, " ")
+        .replace(/\s+/g, " ")
+        .replace(/^\d+\s*/, "")
+        .trim();
+
+    return capitalizarNombre(base || fallback);
+}
+
+function imagenDeItem(item) {
+    if (!item) return "";
+    if (typeof item === "string") return item;
+    return item.imagen || item.src || item.url || "";
+}
+
+function normalizarRegistroManual(joya, index) {
+    return {
+        id: joya.id || `manual-${index}`,
+        nombre: joya.nombre || nombreDesdeImagen(joya.imagen),
+        tipo: joya.tipo || "Oro Nacional",
+        genero: joya.genero || "Unisex",
+        categoria: joya.categoria || "Cadenas",
+        imagen: joya.imagen || "",
+        descripcion: joya.descripcion || "",
+        reciente: Boolean(joya.reciente)
+    };
+}
+
+function expandirLote(lote, loteIndex) {
+    if (!lote || !Array.isArray(lote.grupos)) return [];
+
+    const genero = lote.genero || "Unisex";
+    const categoria = lote.categoria || "Cadenas";
+    const piezas = [];
+
+    lote.grupos.forEach((grupo, grupoIndex) => {
+        const tipo = grupo?.tipo || lote.tipo || "Oro Nacional";
+        const imagenes = Array.isArray(grupo?.imagenes) ? grupo.imagenes : [];
+
+        imagenes.forEach((item, imagenIndex) => {
+            const imagen = imagenDeItem(item);
+            if (!imagen) return;
+
+            piezas.push({
+                id: `lote-${loteIndex}-${grupoIndex}-${imagenIndex}`,
+                nombre: nombreDesdeImagen(imagen, `${categoria} ${imagenIndex + 1}`),
+                tipo,
+                genero,
+                categoria,
+                imagen,
+                descripcion: "",
+                reciente: true
+            });
+        });
+    });
+
+    return piezas;
+}
+
+function toAbsoluteImageUrl(path) {
+    if (!path) return "assets/placeholder.webp";
+    if (/^https?:\/\//i.test(path)) return path;
+
+    const cleanedPath = path.replace(/^\.\//, "").replace(/^\//, "");
+    if (cleanedPath.startsWith("assets/")) {
+        return `https://cdn.jsdelivr.net/gh/${repoOwner}/${repoName}@${repoBranch}/${cleanedPath}`;
+    }
+
+    if (path.startsWith("/")) return `${window.location.origin}${path}`;
+    return `${window.location.origin}/${cleanedPath}`;
+}
 
 async function cargarOro() {
-    try {
-        const user = "stewardsprofile-ux";
-        const repo = "elite-catalogo";
-        const folderPath = "assets/data/oro";
-        const res = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${folderPath}`);
-        if (res.ok) {
-            const archivos = await res.json();
-            const promesas = archivos.filter(a => a.name.endsWith('.json'))
-                                     .map(a => fetch(a.download_url).then(r => r.json()));
-            joyas = await Promise.all(promesas);
-        }
-    } catch (err) { console.error(err); }
-    finally { renderOro(); }
+    if (loaderOro) loaderOro.textContent = "Cargando coleccion...";
+
+    const [manuales, lotes] = await Promise.all([
+        cargarJsonDesdeGithub("assets/data/oro"),
+        cargarJsonLocales(lotesOroLocales)
+    ]);
+
+    const piezasManuales = manuales.map(normalizarRegistroManual).filter((joya) => joya.imagen);
+    const piezasPorLote = lotes.flatMap(expandirLote).filter((joya) => joya.imagen);
+
+    joyas = [...piezasPorLote, ...piezasManuales];
+    renderOro();
+}
+
+function crearCardOro(joya) {
+    const urlFinal = toAbsoluteImageUrl(joya.imagen);
+    const card = document.createElement("div");
+    card.className = "card-oro-full";
+
+    const header = document.createElement("div");
+    header.className = "header-card-oro";
+    const etiquetaHeader = categoriasEspecialesOro.includes(joya.categoria)
+        ? joya.categoria
+        : (joya.genero || "Elite");
+    header.textContent = `${joya.tipo} | ${etiquetaHeader}`;
+
+    const img = document.createElement("img");
+    img.src = urlFinal;
+    img.alt = joya.nombre;
+    img.loading = "lazy";
+    img.decoding = "async";
+    img.addEventListener("click", () => verImagen(urlFinal));
+    img.onerror = () => {
+        img.src = "assets/placeholder.webp";
+    };
+
+    const info = document.createElement("div");
+    info.className = "info-card-oro";
+
+    const boton = document.createElement("button");
+    boton.className = "btn-cotizar-oro-full";
+    boton.textContent = "COTIZAR";
+    boton.addEventListener("click", () => cotizarJoya(joya.nombre, urlFinal));
+    info.appendChild(boton);
+
+    card.appendChild(header);
+    card.appendChild(img);
+    card.appendChild(info);
+    return card;
 }
 
 function renderOro() {
-    if(!catalogoOro) return;
+    if (!catalogoOro) return;
     catalogoOro.innerHTML = "";
 
-    // LÓGICA DE FILTRO TRIPLE: Metal AND Género AND Categoría
-    const filtrados = joyas.filter(j => {
-        const cumpleTipo = (filtroTipo === "Todos" || j.tipo === filtroTipo);
-        const cumpleGenero = (filtroGenero === "Todos" || j.genero === filtroGenero || j.genero === "Unisex");
-        const cumpleCat = (filtroCat === "Todos" || j.categoria === filtroCat);
+    const filtrados = joyas.filter((joya) => {
+        const cumpleTipo = filtroTipo === "Todos" || joya.tipo === filtroTipo;
+        const esEspecial = categoriasEspecialesOro.includes(filtroCat);
+        const cumpleGenero = esEspecial || filtroGenero === "Todos" || joya.genero === filtroGenero || joya.genero === "Unisex";
+        const cumpleCat = filtroCat === "Todos" || joya.categoria === filtroCat;
         return cumpleTipo && cumpleGenero && cumpleCat;
     });
 
-    if(filtrados.length === 0) {
-        catalogoOro.innerHTML = `<p style="color:white; text-align:center; padding:40px; grid-column:1/-1;">No hay piezas disponibles para esta combinación.</p>`;
+    if (!filtrados.length) {
+        catalogoOro.innerHTML = '<p style="color:white; text-align:center; padding:40px; grid-column:1/-1;">No hay piezas disponibles para esta combinacion.</p>';
         return;
     }
 
-    filtrados.forEach(j => {
-        const urlFinal = window.location.origin + j.imagen;
-        const card = document.createElement("div");
-        card.className = "card-oro-full";
-        card.innerHTML = `
-            <div class="header-card-oro">${j.tipo} | ${j.genero || 'Elite'}</div>
-            <img src="${urlFinal}" alt="${j.nombre}" onclick="verImagen('${urlFinal}')" onerror="this.src='assets/placeholder.webp'">
-            <div class="info-card-oro">
-                <h3>${j.nombre}</h3>
-                <p>${j.descripcion || ''}</p>
-                <button class="btn-cotizar-oro-full" onclick="cotizarJoya('${j.nombre}','${urlFinal}')">
-                    COTIZAR AHORA
-                </button>
-            </div>
-        `;
-        catalogoOro.appendChild(card);
+    const visibles = filtrados.slice(0, visiblesOro);
+    const fragment = document.createDocumentFragment();
+    visibles.forEach((joya) => {
+        fragment.appendChild(crearCardOro(joya));
     });
+    catalogoOro.appendChild(fragment);
 }
 
-function filtrarTipo(valor) { filtroTipo = valor; actualizarBotones('tipo-oro', valor); renderOro(); }
-function filtrarGenero(valor) { filtroGenero = valor; actualizarBotones('gen-oro', valor); renderOro(); }
-function filtrarCat(valor) { filtroCat = (filtroCat === valor) ? "Todos" : valor; actualizarBotones('cat-oro', filtroCat); renderOro(); }
+function filtrarTipo(valor) {
+    filtroTipo = valor;
+    visiblesOro = 12;
+    actualizarBotones("tipo-oro", valor);
+    renderOro();
+}
+
+function filtrarGenero(valor) {
+    filtroGenero = valor;
+    if (categoriasEspecialesOro.includes(filtroCat)) {
+        filtroCat = "Todos";
+        actualizarBotones("cat-oro", "Todos");
+        actualizarBotones("cat-oro-especial", "");
+    }
+    visiblesOro = 12;
+    actualizarBotones("gen-oro", valor);
+    renderOro();
+}
+
+function filtrarCat(valor) {
+    filtroCat = filtroCat === valor ? "Todos" : valor;
+    visiblesOro = 12;
+    actualizarBotones("cat-oro", filtroCat);
+    actualizarBotones("cat-oro-especial", "");
+    renderOro();
+}
+
+function filtrarCatEspecial(valor) {
+    filtroCat = filtroCat === valor ? "Todos" : valor;
+    if (filtroCat !== "Todos") {
+        filtroGenero = "Todos";
+    }
+    visiblesOro = 12;
+    actualizarBotones("gen-oro", filtroGenero);
+    actualizarBotones("cat-oro", "");
+    actualizarBotones("cat-oro-especial", filtroCat === "Todos" ? "" : filtroCat);
+    renderOro();
+}
 
 function actualizarBotones(clase, seleccionado) {
-    document.querySelectorAll('.' + clase).forEach(b => {
-        const val = b.getAttribute('data-val');
-        b.classList.toggle('active', val === seleccionado);
+    document.querySelectorAll(`.${clase}`).forEach((boton) => {
+        const valor = boton.getAttribute("data-val");
+        boton.classList.toggle("active", valor === seleccionado);
     });
 }
 
-function cotizarJoya(n, img) {
-    const msg = `¡Hola! ✨ Me interesa esta pieza:\n*${n}*\nReferencia: ${img}`;
-    window.open(`https://wa.me/${telefonoGold}?text=${encodeURIComponent(msg)}`, "_blank");
+function cotizarJoya(nombre, imagen) {
+    const mensaje = `Hola, me interesa esta pieza:\n*${nombre}*\nReferencia: ${imagen}`;
+    window.open(`https://wa.me/${telefonoGold}?text=${encodeURIComponent(mensaje)}`, "_blank");
 }
 
-function verImagen(u){ 
-    const v = document.getElementById("visorImagen");
-    const i = document.getElementById("imagenGrande");
-    if(v && i) { i.src = u; v.style.display = "flex"; }
+function verImagen(url) {
+    const visor = document.getElementById("visorImagen");
+    const imagen = document.getElementById("imagenGrande");
+    if (visor && imagen) {
+        imagen.src = url;
+        visor.style.display = "flex";
+    }
 }
+
+window.addEventListener("scroll", () => {
+    if (cargandoMasOro) return;
+
+    const totalFiltrados = joyas.filter((joya) => {
+        const cumpleTipo = filtroTipo === "Todos" || joya.tipo === filtroTipo;
+        const cumpleGenero = filtroGenero === "Todos" || joya.genero === filtroGenero || joya.genero === "Unisex";
+        const cumpleCat = filtroCat === "Todos" || joya.categoria === filtroCat;
+        return cumpleTipo && cumpleGenero && cumpleCat;
+    }).length;
+
+    if (visiblesOro >= totalFiltrados) return;
+
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 1000) {
+        cargandoMasOro = true;
+        visiblesOro += 12;
+        renderOro();
+        window.setTimeout(() => {
+            cargandoMasOro = false;
+        }, 200);
+    }
+});
 
 cargarOro();
