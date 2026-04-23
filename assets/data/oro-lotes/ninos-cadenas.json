@@ -1,5 +1,5 @@
 {
-  "genero": "Niños",
+  "genero": "NiÃ±os",
   "categoria": "Cadenas",
   "grupos": [
     {
@@ -37,6 +37,17 @@
         },
         {
           "imagen": "assets/images/f6b437bc-4d78-449c-8463-5320fc3f6411.jpg"
+        }
+      ]
+    },
+    {
+      "tipo": "Oro Nacional",
+      "imagenes": [
+        {
+          "imagen": "assets/images/01f5b274-e171-4ac8-9ceb-b663614d4861.jpg"
+        },
+        {
+          "imagen": "assets/images/2d2578de-6bbd-464d-a607-fa3af9195475.jpg"
         }
       ]
     }
