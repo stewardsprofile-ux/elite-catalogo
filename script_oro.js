@@ -215,7 +215,7 @@ function crearCardOro(joya) {
     const boton = document.createElement("button");
     boton.className = "btn-cotizar-oro-full";
     boton.textContent = "COTIZAR";
-    boton.addEventListener("click", () => cotizarJoya(joya.nombre, urlFinal));
+    boton.addEventListener("click", () => cotizarJoya(joya));
     info.appendChild(boton);
 
     card.appendChild(header);
@@ -295,8 +295,39 @@ function actualizarBotones(clase, seleccionado) {
     });
 }
 
-function cotizarJoya(nombre, imagen) {
-    const mensaje = `Hola, me interesa esta pieza:\n*${nombre}*\nReferencia: ${imagen}`;
+function slugWhatsApp(texto) {
+    return String(texto || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+}
+
+function enlaceCatalogoJoya(joya) {
+    const baseUrl = new URL("/oro.html", window.location.origin);
+    const params = new URLSearchParams();
+
+    if (joya?.tipo) params.set("tipo", joya.tipo);
+    if (joya?.categoria) params.set("categoria", joya.categoria);
+    if (joya?.genero && !categoriasEspecialesOro.includes(joya.categoria)) {
+        params.set("genero", joya.genero);
+    }
+    if (joya?.nombre) params.set("pieza", slugWhatsApp(joya.nombre));
+
+    baseUrl.search = params.toString();
+    return baseUrl.toString();
+}
+
+function cotizarJoya(joya) {
+    const nombre = joya?.nombre || "Pieza de oro";
+    const referencia = [
+        joya?.tipo,
+        categoriasEspecialesOro.includes(joya?.categoria) ? joya?.categoria : joya?.genero,
+        !categoriasEspecialesOro.includes(joya?.categoria) ? joya?.categoria : ""
+    ].filter(Boolean).join(" | ");
+
+    const mensaje = `Hola, me interesa esta pieza de oro:\n*${nombre}*\n${referencia ? `Referencia: ${referencia}\n` : ""}Catalogo: ${enlaceCatalogoJoya(joya)}`;
     window.open(`https://wa.me/${telefonoGold}?text=${encodeURIComponent(mensaje)}`, "_blank");
 }
 
