@@ -204,6 +204,65 @@
           "imagen": "assets/images/ff845fb3-cf2d-48bc-a955-c2ab885dfcb8.jpg"
         }
       ]
+    },
+    {
+      "tipo": "Oro Nacional",
+      "imagenes": [
+        {
+          "imagen": "assets/images/012eff72-c71e-4b47-9d32-3e6f0ed95389.jpg"
+        },
+        {
+          "imagen": "assets/images/2a3effc1-3284-4238-8f7d-2d388677ac66.jpg"
+        },
+        {
+          "imagen": "assets/images/468aed42-5894-4570-9509-dcd9f4fa0adf.jpg"
+        },
+        {
+          "imagen": "assets/images/6082834f-6837-40c4-b9b6-0f359d0e662b.jpg"
+        },
+        {
+          "imagen": "assets/images/6d9dcc49-f12c-4c76-b9c9-c4434a849264-1.jpg"
+        },
+        {
+          "imagen": "assets/images/6d9dcc49-f12c-4c76-b9c9-c4434a849264.jpg"
+        },
+        {
+          "imagen": "assets/images/98eb280f-7b11-43d6-96b0-a00209fa0dc5.jpg"
+        },
+        {
+          "imagen": "assets/images/840a95ee-4280-448d-973a-b253e175d001.jpg"
+        },
+        {
+          "imagen": "assets/images/207b992c-12ba-4564-8056-c6e7926f7ff1.jpg"
+        },
+        {
+          "imagen": "assets/images/5a695d35-4bb5-4ce6-88ea-27060ab7e35b.jpg"
+        },
+        {
+          "imagen": "assets/images/0e0b6577-4ded-454a-8877-3df99a75693e.jpg"
+        },
+        {
+          "imagen": "assets/images/6bc57746-d8c8-4678-896e-c9325a774e1d.jpg"
+        },
+        {
+          "imagen": "assets/images/9f08ddbc-adb8-42a0-b957-cf74b96e710d.jpg"
+        },
+        {
+          "imagen": "assets/images/b684e108-854a-469f-a5ca-6eea8352a707.jpg"
+        },
+        {
+          "imagen": "assets/images/a8e7d011-3c73-418f-8bb7-8d305daa2327.jpg"
+        },
+        {
+          "imagen": "assets/images/bb8df4f3-6244-447a-85fd-bd9a7a6fd680.jpg"
+        },
+        {
+          "imagen": "assets/images/d38c775a-bd25-4ca8-b24f-015bccb7a605.jpg"
+        },
+        {
+          "imagen": "assets/images/e3cc2a56-75cd-4934-9da0-966e401d1524.jpg"
+        }
+      ]
     }
   ]
 }
