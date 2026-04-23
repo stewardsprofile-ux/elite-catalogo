@@ -153,7 +153,7 @@ header {
 .contenedor-marcas-scroll {
     position: relative;
     max-width: 1000px;
-    margin: 0 auto 25px auto;
+    margin: 0 auto 14px auto;
     display: flex;
     align-items: center;
     padding: 0;
@@ -206,7 +206,7 @@ header {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-top: 18px;
+    margin-top: 8px;
     padding: 12px 26px;
     background: rgba(212, 175, 55, 0.12);
     color: #D4AF37;
@@ -394,9 +394,17 @@ header {
     /* Respetamos el resto de tu código de marcas y buscador */
     #catalogo { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 15px; }
     .card img { height: 180px; }
-    .titulo { font-size: 24px; }
-    .search-box-wrapper { flex-direction: column; width: 100%; }
+    .titulo { font-size: 24px; margin: 8px 0 18px 0; }
+    .logo { margin: 0 auto 8px auto; }
+    .search-container { margin-bottom: 14px; padding: 0 12px; }
+    .search-box-wrapper { flex-direction: column; width: 100%; gap: 10px; }
     .btn-ia-search { width: 100%; flex: none; }
+    .filtros-principales { gap: 8px; margin-bottom: 12px; }
+    .filtros-principales button { padding: 9px 18px; }
+    .contenedor-marcas-scroll { margin: 0 auto 10px auto; }
+    .grid-marcas { gap: 8px; padding: 6px 26px; }
+    .btn-marca { padding: 8px 14px; font-size: 10px; }
+    .btn-testimonios { margin-top: 2px; padding: 11px 24px; }
 }
 
 /* ==========================================================================
@@ -446,4 +454,8 @@ header {
     .btn-pregunta {
         width: 92%;
     }
+}
+
+@media (max-width: 600px) {
+    header { padding: 22px 10px 18px; }
 }
